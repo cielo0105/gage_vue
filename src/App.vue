@@ -9,7 +9,9 @@ import VHeader from '@/components/common/VHeader.vue'
 </template>
 
 <style scoped>
-header {
-  padding: 1rem 3rem;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
