@@ -26,7 +26,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 3rem;
+  padding: 1.5rem 3rem;
 }
 
 .logo {
@@ -37,6 +37,8 @@ a {
   color: white;
   text-decoration: none;
   margin: 0 1rem;
+  font-size: 1rem;
+  font-weight: 500;
 }
 .login-btn {
   width: 100%;
@@ -49,7 +51,7 @@ a {
   color: #6e2add;
   text-align: center;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 600;
 }
 </style>
