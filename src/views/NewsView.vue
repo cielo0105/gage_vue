@@ -1,9 +1,7 @@
 <script setup></script>
 
 <template>
-  <div>
-    <h3>home입니다.</h3>
-  </div>
+  <div></div>
 </template>
 
 <style scoped></style>

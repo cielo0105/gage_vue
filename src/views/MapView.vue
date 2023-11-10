@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h3>home입니다.</h3>
+    <h3>지도 페이지</h3>
   </div>
 </template>
 
