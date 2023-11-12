@@ -1,9 +1,9 @@
 <script setup>
-const props = defineProps({ width: String, height: String, msg: String })
+const props = defineProps({ width: String, height: String, msg: String, type: String })
 </script>
 
 <template>
-  <button class="sign-btn text" :style="{ width: props.width, height: props.height }">
+  <button :type="type" class="sign-btn text" :style="{ width: props.width, height: props.height }">
     {{ props.msg }}
   </button>
 </template>

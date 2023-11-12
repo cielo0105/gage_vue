@@ -1,10 +1,33 @@
 <script setup>
 import SignBtn from '@/components/auth/SignBtn.vue'
 import InputBox from '@/components/auth/InputBox.vue'
+import { ref } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-const info = {
-  userid:
+const userid = ref('')
+const userpass = ref('')
+
+const submitForm = () => {
+  console.log(userid.value, userpass.value)
+
+  const url = 'http://localhost:8080/member/login'
+  const requestData = {
+    userId: userid.value,
+    userPass: userpass.value
+  }
+
+  axios
+    .post(url, requestData)
+    .then((response) => {
+      console.log('로그인 성공', response)
+      router.push({ name: 'home' })
+    })
+    .catch((error) => {
+      console.error('로그인 실패', error)
+      alert('아이디/비밀번호 확인')
+    })
 }
 </script>
 
@@ -19,16 +42,17 @@ const info = {
       <SignBtn width="31.4375rem" height="2.875rem" msg="Sign up with Google" /><br />
       <SignBtn width="31.4375rem" height="2.875rem" msg="Sign up with Kakao" />
       <div class="or">or</div>
-      <form v-on:submit.prevent="submitForm">
+      <form v-on:submit.prevent="submitForm" class="login-form">
         <div class="input-group">
           <label class="text">아이디</label>
-          <InputBox width="36.875rem" height="3.6875rem" type="text" />
+          <InputBox v-model="userid" width="36.875rem" height="3.6875rem" type="text" />
         </div>
+
         <div class="input-group">
           <label class="text">비밀번호</label>
-          <InputBox width="36.875rem" height="3.6875rem" type="password" />
+          <InputBox v-model="userpass" width="36.875rem" height="3.6875rem" type="password" />
         </div>
-        <SignBtn width="25.5rem" height="2.875rem" msg="로그인" />
+        <SignBtn type="submit" width="25.5rem" height="2.875rem" msg="로그인" />
       </form>
     </div>
   </div>
@@ -74,13 +98,10 @@ const info = {
   padding-left: 0.5rem;
   padding-bottom: 0.5rem;
 }
-/* .login-btn {
-  width: 25.5rem;
-  height: 2.875rem;
-  flex-shrink: 0;
-  border-radius: 2.5rem;
-  background: #fff;
-  border: none;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-} */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 </style>

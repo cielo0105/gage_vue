@@ -1,10 +1,17 @@
 <script setup>
-const props = defineProps({ width: String, height: String, type: String })
+const props = defineProps({ modelValue: String, width: String, height: String, type: String })
+// const props = defineProps(['modelValue', 'width', 'height', 'type'])
+const emit = defineEmits(['update:modelValue'])
+const handleInput = ($event) => {
+  emit('update:modelValue', $event.target.value)
+}
 </script>
 
 <template>
   <input
     class="input-box"
+    :value="modelValue"
+    @input="handleInput"
     :style="{ width: props.width, height: props.height }"
     :type="props.type"
   />
