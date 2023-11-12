@@ -1,35 +1,31 @@
-# happyhouse
+# 관통프로젝트: TP_S10_S09_Final_Vue_HappyHouse_최지우_임현지
+### 제출일: 2023.11.13
 
-This template should help get you started developing with Vue 3 in Vite.
+### 참여 페어
+- 최지우(조장), 임현지
 
-## Recommended IDE Setup
+### 처리된 요구사항 목록
+ 
+|난이도|구현기능|세부|작성여부(O/X)|
+|:---:|---|---|:---:|
+|기본|QnA 게시판 Vue.js를 적용한 웹페이지|게시글 목록|O|
+|기본|QnA 게시판 Vue.js를 적용한 웹페이지|게시글 등록|O|
+|기본|QnA 게시판 Vue.js를 적용한 웹페이지|게시글 수정|O|
+|기본|QnA 게시판 Vue.js를 적용한 웹페이지|게시글 상세 검색|O|
+|기본|서버측 구현|게시글 목록|O|
+|기본|서버측 구현|게시글 등록|O|
+|기본|서버측 구현|게시글 수정|O|
+|기본|서버측 구현|게시글 삭제|O|
+|기본|서버측 구현|게시글 상세 검색|O|
+|추가|동네 업종 정보 조회||X|
+|추가|동네 환경 점검 정보 조회||X|
+|심화|메인페이지 or 추가기능||O|
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### 실행화면 캡쳐 -
+DB 구축 : select한 결과를 캡쳐해 주세요
 
-## Customize configuration
+구현 기능: FrontEnd + BackEnd(Controller, Model(Dao, Service, Dto)
+![실행화면캡쳐](./화면캡쳐/화면캡쳐_0001_주택정보_web.png)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+구현 기능: 전체 프로그램 동작/오류 없이 전체 동작 1
+![실행화면캡쳐](./화면캡쳐/화면캡쳐_Main화면_web.png)
