@@ -22,6 +22,7 @@ const search = () => {
 
 <style scoped>
 .box {
+  width: 25rem;
   padding: 1rem;
   border-radius: 0.9375rem;
   background: #fff;
@@ -40,7 +41,6 @@ const search = () => {
 
 input {
   width: 21.1875rem;
-  height: 1.8rem;
   border-radius: 0.9375rem;
   border: 2px solid #0030ab;
   background: #fff;
