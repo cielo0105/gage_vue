@@ -31,7 +31,7 @@ DB 구축 : select한 결과를 캡쳐해 주세요
 
 ## 회원가입
 ![regist](/uploads/cc59d532565f79c5f69739d394efe244/regist.gif)
-![registerdb](/uploads/a2950305838a8dc063cc1700f81d9694/registerdb.png)
+![userdb](/uploads/7bdc7a403b08037daad6e79d54ebe3ad/userdb.png)
 
 ## 지도
 ![map](/uploads/753a1d815955e0854ebad9d6b6812dab/map.gif)
