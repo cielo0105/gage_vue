@@ -1,9 +1,125 @@
-<script setup></script>
+<script setup>
+import { onMounted, ref } from 'vue'
+import SearchBox from '@/components/map/SearchBox.vue'
+import AptInfoBox from '@/components/map/AptInfoBox.vue'
+import { getAptList } from '@/components/api/getAptList.js'
+import { getAptDealInfo } from '@/components/api/getAptDealInfo.js'
+import { changeMoney } from '@/components/utils/changeMoney.js'
+
+let map, geocoder
+let markers = []
+let aptInfo = ref({
+  display: 'none',
+  apartmentName: 'hello'
+})
+
+onMounted(() => {
+  if (window.kakao && window.kakao.maps) {
+    initMap()
+  } else {
+    const script = document.createElement('script')
+    script.onload = () => window.kakao.maps.load(initMap)
+    script.src =
+      '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8980521e66956686ad980618b70271ab&libraries=services'
+    document.head.appendChild(script)
+  }
+})
+
+const initMap = () => {
+  let mapContainer = document.getElementById('map') // 지도를 표시할 div
+  let mapOption = {
+    center: new window.kakao.maps.LatLng(37.564343, 126.947613), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+  }
+
+  map = new window.kakao.maps.Map(mapContainer, mapOption)
+  geocoder = new kakao.maps.services.Geocoder()
+
+  window.navigator.geolocation.getCurrentPosition((p) => {
+    let lat = p.coords.latitude
+    let lng = p.coords.longitude
+    map.setCenter(new window.kakao.maps.LatLng(lat, lng))
+  })
+
+  window.kakao.maps.event.addListener(map, 'tilesloaded', () => getAddr())
+}
+
+//현재 중심 위치 동 정보 구하기
+const getAddr = () => {
+  let coord = map.getCenter()
+  geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), (e) => {
+    markers.map((m) => m.setMap(null))
+    getApt(e[0].code)
+  })
+}
+
+//현재 map 중심 동에 위치한 아파트 정보 list로 가져옴.
+const getApt = async (code) => {
+  const aptList = await getAptList(code)
+  for (let apt of aptList) {
+    createMarker(apt)
+  }
+}
+
+//마커 생성
+const createMarker = (data) => {
+  let content = document.createElement('div')
+  content.className = 'overlaybox'
+  content.onclick = (e) => {
+    let lat = e.target.children[0].value
+    let lng = e.target.children[1].value
+    let code = e.target.children[2].value
+    showDetail(lat, lng, code)
+  }
+
+  content.innerHTML = `
+	  <input type="hidden" name="clickLat" value=${data.lat}>
+	  <input type="hidden" name="clickLng" value=${data.lng}>
+	  <input type="hidden" name="clickCode" value=${data.aptCode}>
+	  <div class="price">${changeMoney(data.dealAmount)}</div>
+	  <div class="date">${data.buildYear}</div>`
+
+  // position은 아파트의 좌표를 가지고 맵 위에 위치 객체를 생성
+  let position = new window.kakao.maps.LatLng(data.lat, data.lng)
+
+  // 맵 위에 마커를 커스텀 이미지로 변경하기
+  let customOverlay = new window.kakao.maps.CustomOverlay({
+    position: position,
+    content: content,
+    xAnchor: 0.3,
+    yAnchor: 0.91
+  })
+
+  customOverlay.setMap(map)
+  markers.push(customOverlay)
+}
+
+const showDetail = (lat, lon, code) => {
+  geocoder.coord2Address(lon, lat, async (result, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      let road_address = !!result[0].road_address ? result[0].road_address.address_name : ' '
+      let address = result[0].address.address_name
+
+      console.log('addressDetail: ' + road_address + 'address: ' + address)
+
+      const apt = await getAptDealInfo(code)
+      aptInfo.value = { ...apt, road_address: road_address, address: address, display: 'block' }
+      console.log('aptInfo: ' + aptInfo.value.apartmentName)
+    }
+  })
+}
+</script>
 
 <template>
-  <div>
-    <h3>지도 페이지</h3>
+  <div id="map">
+    <SearchBox />
+    <AptInfoBox :apt="aptInfo" />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#map {
+  width: 100vw;
+  height: calc(100vh - 100px);
+}
+</style>
