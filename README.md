@@ -25,7 +25,22 @@
 DB 구축 : select한 결과를 캡쳐해 주세요
 
 구현 기능: FrontEnd + BackEnd(Controller, Model(Dao, Service, Dto)
-![실행화면캡쳐](./화면캡쳐/화면캡쳐_0001_주택정보_web.png)
 
-구현 기능: 전체 프로그램 동작/오류 없이 전체 동작 1
-![실행화면캡쳐](./화면캡쳐/화면캡쳐_Main화면_web.png)
+## 로그인
+![login](/uploads/31fa3f3b9cc7e1cda59dd72cac243219/login.gif)
+
+## 회원가입
+![regist](/uploads/cc59d532565f79c5f69739d394efe244/regist.gif)
+![registerdb](/uploads/a2950305838a8dc063cc1700f81d9694/registerdb.png)
+
+## 지도
+![map](/uploads/753a1d815955e0854ebad9d6b6812dab/map.gif)
+
+
+## 공지사항 목록
+![notice](/uploads/85a3265eb8abc79a50a8a5571520f5b5/notice.gif)
+
+## 공지사항 등록
+![write](/uploads/8553eabcd398d3750b16ec9c05b34fa6/write.gif)!
+![noticedb](/uploads/a59e120fa7d9059d469f8cbb1df398b3/noticedb.png)
+
