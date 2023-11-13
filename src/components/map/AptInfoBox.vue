@@ -1,19 +1,24 @@
 <script setup>
-import { ref, watch } from 'vue'
 import { changeMoney } from '@/components/utils/changeMoney.js'
-const props = defineProps({ apt: Object })
+defineProps({ apt: Object })
 </script>
 
 <template>
   <div id="information" class="information">
-    <div class="brt-6 p-2 gray-700">
-      <button class="text-white border-0 gray-700" @click="$emit('close-box')">X</button>
+    <div class="info-header">
+      <button class="close-btn" @click="$emit('close-box')">✕</button>
     </div>
 
-    <div class="p-3 border-bottom">
-      <h4 id="aptname" class="fw-bold">{{ apt?.apartmentName }}</h4>
-      <p class="fw-bold" id="address">{{ apt?.address }}</p>
-      <p id="address-detail">{{ apt?.road_address }}</p>
+    <div class="px-3 pb-3 border-bottom">
+      <h4 class="fw-bold">{{ apt?.apartmentName }}</h4>
+      <div>
+        <span class="badge rounded-pill text-bg-secondary me-2">지번주소</span>
+        <span>{{ apt?.address }}</span>
+      </div>
+      <div v-if="!apt?.road_address">
+        <span class="badge rounded-pill text-bg-secondary me-2">도로명주소</span>
+        <p>{{ apt?.road_address }}</p>
+      </div>
     </div>
 
     <div class="p-3 border-bottom d-flex">
@@ -25,15 +30,19 @@ const props = defineProps({ apt: Object })
 
     <div class="p-3">
       <p>거래내역</p>
-      <table id="table-history" class="table table-bordered">
+      <table id="table-history" class="table table-hover">
         <thead class="table-light">
-          <td>실거래가</td>
-          <td>거래일자</td>
+          <tr>
+            <th>실거래가</th>
+            <th>거래일자</th>
+          </tr>
         </thead>
-        <tr v-for="(element, index) in apt?.houseDealDto" :key="index">
-          <td>{{ changeMoney(element.dealAmount) }}</td>
-          <td>{{ element.dealYear }}년 {{ element.dealMonth }}월 {{ element.dealDay }}일</td>
-        </tr>
+        <tbody>
+          <tr v-for="(element, index) in apt?.houseDealDto" :key="index">
+            <td>{{ changeMoney(element.dealAmount) }}</td>
+            <td>{{ element.dealYear }}.{{ element.dealMonth }}.{{ element.dealDay }}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
@@ -65,5 +74,17 @@ const props = defineProps({ apt: Object })
   border-radius: 10px;
   background-clip: padding-box;
   border: 4px solid transparent;
+}
+
+.info-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-btn {
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  outline: none;
 }
 </style>
