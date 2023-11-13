@@ -1,10 +1,6 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import VHeader from '@/components/common/VHeader.vue'
-
-const showDetail = (e) => {
-  console.log('click@@@@@@@@')
-}
 </script>
 
 <template>
