@@ -8,10 +8,8 @@ import { changeMoney } from '@/components/utils/changeMoney.js'
 
 let map, geocoder
 let markers = []
-let aptInfo = ref({
-  display: 'none',
-  apartmentName: 'hello'
-})
+let aptInfo = ref(null)
+let isShow = ref(false)
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -97,14 +95,12 @@ const createMarker = (data) => {
 const showDetail = (lat, lon, code) => {
   geocoder.coord2Address(lon, lat, async (result, status) => {
     if (status === kakao.maps.services.Status.OK) {
-      let road_address = !!result[0].road_address ? result[0].road_address.address_name : ' '
+      let road_address = !result[0].road_address ? result[0].road_address.address_name : ' '
       let address = result[0].address.address_name
 
-      console.log('addressDetail: ' + road_address + 'address: ' + address)
-
       const apt = await getAptDealInfo(code)
-      aptInfo.value = { ...apt, road_address: road_address, address: address, display: 'block' }
-      console.log('aptInfo: ' + aptInfo.value.apartmentName)
+      aptInfo.value = { ...apt, road_address: road_address, address: address }
+      isShow.value = true
     }
   })
 }
@@ -113,7 +109,7 @@ const showDetail = (lat, lon, code) => {
 <template>
   <div id="map">
     <SearchBox />
-    <AptInfoBox :apt="aptInfo" />
+    <AptInfoBox :apt="aptInfo" v-show="isShow" @close-box="isShow = false" />
   </div>
 </template>
 

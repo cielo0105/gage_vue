@@ -1,31 +1,25 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { changeMoney } from '@/components/utils/changeMoney.js'
 const props = defineProps({ apt: Object })
-const isShow = ref(props.apt.display)
-
-const closeInfo = () => {
-  console.log('close info')
-  isShow.value = 'none'
-}
 </script>
 
 <template>
-  <div id="information" class="information" :style="{ display: isShow }">
+  <div id="information" class="information">
     <div class="brt-6 p-2 gray-700">
-      <button class="text-white border-0 gray-700" :onclick="closeInfo">X</button>
+      <button class="text-white border-0 gray-700" @click="$emit('close-box')">X</button>
     </div>
 
     <div class="p-3 border-bottom">
-      <h4 id="aptname" class="fw-bold">{{ apt.apartmentName }}</h4>
-      <p class="fw-bold" id="address">{{ apt.address }}</p>
-      <p id="address-detail">{{ apt.road_address }}</p>
+      <h4 id="aptname" class="fw-bold">{{ apt?.apartmentName }}</h4>
+      <p class="fw-bold" id="address">{{ apt?.address }}</p>
+      <p id="address-detail">{{ apt?.road_address }}</p>
     </div>
 
     <div class="p-3 border-bottom d-flex">
       <div>
         <p>최근 거래 금액</p>
-        <h4 id="curCost" class="fw-bold">{{ changeMoney(apt.houseDealDto?.[0].dealAmount) }}</h4>
+        <h4 id="curCost" class="fw-bold">{{ changeMoney(apt?.houseDealDto?.[0].dealAmount) }}</h4>
       </div>
     </div>
 
@@ -36,7 +30,7 @@ const closeInfo = () => {
           <td>실거래가</td>
           <td>거래일자</td>
         </thead>
-        <tr v-for="(element, index) in apt.houseDealDto" :key="index">
+        <tr v-for="(element, index) in apt?.houseDealDto" :key="index">
           <td>{{ changeMoney(element.dealAmount) }}</td>
           <td>{{ element.dealYear }}년 {{ element.dealMonth }}월 {{ element.dealDay }}일</td>
         </tr>
@@ -61,5 +55,15 @@ const closeInfo = () => {
 
   max-height: 80vh;
   overflow-y: scroll;
+}
+
+.information::-webkit-scrollbar {
+  width: 10px;
+}
+.information::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 4px solid transparent;
 }
 </style>

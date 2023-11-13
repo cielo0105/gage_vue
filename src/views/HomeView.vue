@@ -8,7 +8,11 @@ import { RouterLink } from 'vue-router'
     <div class="title">
       <div class="left">
         <h1>당신이 찾던</h1>
-        <div class="word">역세권</div>
+        <div class="word">
+          <div><div>역세권</div></div>
+          <div><div>혼자 살</div></div>
+          <div><div>치안 좋은</div></div>
+        </div>
       </div>
       <strong>.zip</strong>
     </div>
@@ -55,12 +59,50 @@ h1 {
 
 .word {
   width: 25rem;
-  height: 100%;
+  height: 6rem;
+  overflow: hidden;
   color: #353535;
   text-align: center;
   font-size: 4rem;
   font-weight: 700;
   border-bottom: 4px solid #353535;
+}
+
+.word > div > div {
+  padding: 0.1rem 2rem;
+  height: 6rem;
+  display: inline-block;
+}
+
+.word div:first-child {
+  animation: show 5s linear infinite;
+}
+
+@keyframes show {
+  0% {
+    margin-top: -270px;
+  }
+  5% {
+    margin-top: -180px;
+  }
+  33% {
+    margin-top: -180px;
+  }
+  38% {
+    margin-top: -90px;
+  }
+  66% {
+    margin-top: -90px;
+  }
+  71% {
+    margin-top: 0px;
+  }
+  99.99% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: -270px;
+  }
 }
 
 strong {
