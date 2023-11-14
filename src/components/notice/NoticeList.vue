@@ -37,7 +37,7 @@ const moveWrite = () => {
 
 <template>
   <h3 class="title">공지사항</h3>
-  <div class="row justify-content-center">
+  <div class="row justify-content-center container">
     <div class="col-lg-10 mt-5">
       <div class="row align-self-center mb-2">
         <div class="col-md-2 text-start">
@@ -97,14 +97,12 @@ const moveWrite = () => {
 .container {
   border-radius: 0.9375rem;
   background: rgba(255, 255, 255, 0.29);
+  padding: 1rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  padding: 7rem;
+  justify-content: center;
 }
 .title {
-  color: #fff;
+  color: #6e2add;
   font-size: 3rem;
   font-weight: 700;
 }
@@ -136,8 +134,9 @@ const moveWrite = () => {
   align-items: center;
 }
 
-.my-table {
-  background-color: none !important;
-  background: none !important;
+.table th,
+.table td {
+  background-color: transparent !important;
+  color: white;
 }
 </style>
