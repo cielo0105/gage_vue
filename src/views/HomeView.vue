@@ -90,19 +90,19 @@ h1 {
 
 @keyframes show {
   0% {
-    margin-top: -270px;
+    margin-top: -16.875rem;
   }
   5% {
-    margin-top: -180px;
+    margin-top: -12rem;
   }
   33% {
-    margin-top: -180px;
+    margin-top: -12rem;
   }
   38% {
-    margin-top: -90px;
+    margin-top: -5.625rem;
   }
   66% {
-    margin-top: -90px;
+    margin-top: -5.625rem;
   }
   71% {
     margin-top: 0px;
@@ -111,7 +111,7 @@ h1 {
     margin-top: 0px;
   }
   100% {
-    margin-top: -270px;
+    margin-top: -16.875rem;
   }
 }
 
