@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import VFooter from '@/components/common/VFooter.vue'
 </script>
 
 <template>
@@ -22,7 +23,16 @@ import { RouterLink } from 'vue-router'
     <span>주택 실거래가 정보를 확인해보세요!</span>
     <router-link class="start-btn" to="/map">시작하기</router-link>
   </section>
-  <div class="info1"></div>
+  <div class="info1">
+    <img src="../assets/info1.png" alt="info1" />
+  </div>
+  <div class="info2">
+    <img src="../assets/info2.png" alt="info2" />
+  </div>
+  <div class="info3">
+    <img src="../assets/info3.png" alt="info3" />
+  </div>
+  <VFooter />
 </template>
 
 <style scoped>
@@ -143,8 +153,19 @@ span {
 }
 
 .info1 {
-  width: 100%;
-  height: 498px;
   background: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.info2 {
+  text-align: center;
+}
+
+.info3 {
+  background: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  padding: 4rem 0;
+  margin-bottom: 13rem;
 }
 </style>
