@@ -63,7 +63,7 @@ const submitForm = () => {
       <SignBtn width="31.4375rem" height="2.875rem" msg="Sign up with Kakao" />
       <div class="or">or</div>
       <form v-on:submit.prevent="submitForm" class="join-form">
-        <div class="input-group">
+        <div>
           <label class="text">이메일</label>
           <InputBox
             v-model="userid"
@@ -74,11 +74,11 @@ const submitForm = () => {
           />
         </div>
         <span v-if="!emailFlag">이메일 형식이 올바르지 않습니다</span>
-        <div class="input-group">
+        <div>
           <label class="text">비밀번호</label>
           <InputBox v-model="userpass" width="36.875rem" height="3.6875rem" type="password" />
         </div>
-        <div class="input-group">
+        <div>
           <label class="text">비밀번호 확인</label>
           <InputBox
             v-model="passcheck"
@@ -89,7 +89,7 @@ const submitForm = () => {
           />
         </div>
         <span v-if="!passFlag">비밀번호가 일치하지 않습니다.</span>
-        <div class="input-group">
+        <div>
           <label class="text" for="nickname">이름</label>
           <InputBox v-model="username" width="36.875rem" height="3.6875rem" type="text" />
         </div>
@@ -112,11 +112,13 @@ const submitForm = () => {
   align-items: center;
   width: 80%;
   padding: 7rem;
+  margin-bottom: 4rem;
 }
 .title {
   color: #6e2add;
   text-align: center;
   font-size: 2rem;
+  font-weight: 900;
 }
 
 .join-msg {
@@ -139,8 +141,10 @@ const submitForm = () => {
 .text {
   color: #6e2add;
   font-size: 1.25rem;
+  font-weight: 700;
   display: block;
   padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .join-form {
