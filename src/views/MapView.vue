@@ -31,7 +31,7 @@ const initMap = () => {
   }
 
   map = new window.kakao.maps.Map(mapContainer, mapOption)
-  geocoder = new kakao.maps.services.Geocoder()
+  geocoder = new window.kakao.maps.services.Geocoder()
 
   window.navigator.geolocation.getCurrentPosition((p) => {
     let lat = p.coords.latitude
@@ -94,8 +94,9 @@ const createMarker = (data) => {
 
 const showDetail = (lat, lon, code) => {
   geocoder.coord2Address(lon, lat, async (result, status) => {
-    if (status === kakao.maps.services.Status.OK) {
-      let road_address = !result[0].road_address ? result[0].road_address.address_name : ' '
+    if (status === window.kakao.maps.services.Status.OK) {
+      console.log('road_address', result[0].road_address)
+      let road_address = result[0].road_address.address_name
       let address = result[0].address.address_name
 
       const apt = await getAptDealInfo(code)
