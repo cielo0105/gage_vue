@@ -34,21 +34,21 @@ const submitForm = () => {
 <template>
   <div class="big-container">
     <div class="container">
-      <h3 class="title">Login</h3>
+      <h3 class="title">LOGIN</h3>
       <div class="join-msg">
         어서오세요! 아직 저희 사이트의 회원이 아니시면 <br />
-        <router-link to="/join">회원가입</router-link>을 먼저 진행해주세요!
+        <router-link to="/join" class="join">회원가입</router-link>을 먼저 진행해주세요!
       </div>
-      <SignBtn width="31.4375rem" height="2.875rem" msg="Sign up with Google" /><br />
-      <SignBtn width="31.4375rem" height="2.875rem" msg="Sign up with Kakao" />
+      <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Google" /><br />
+      <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Kakao" />
       <div class="or">or</div>
       <form v-on:submit.prevent="submitForm" class="login-form">
-        <div class="input-group">
+        <div>
           <label class="text">아이디</label>
           <InputBox v-model="userid" width="36.875rem" height="3.6875rem" type="text" />
         </div>
 
-        <div class="input-group">
+        <div>
           <label class="text">비밀번호</label>
           <InputBox v-model="userpass" width="36.875rem" height="3.6875rem" type="password" />
         </div>
@@ -71,11 +71,13 @@ const submitForm = () => {
   align-items: center;
   width: 80%;
   padding: 7rem;
+  margin-bottom: 4rem;
 }
 .title {
   color: #6e2add;
   text-align: center;
   font-size: 2rem;
+  font-weight: 900;
 }
 
 .join-msg {
@@ -90,10 +92,12 @@ const submitForm = () => {
   font-size: 1.25rem;
   margin-bottom: 5rem;
   margin-top: 1rem;
+  font-weight: 400;
 }
 .text {
   color: #6e2add;
   font-size: 1.25rem;
+  font-weight: 700;
   display: block;
   padding-left: 0.5rem;
   padding-bottom: 0.5rem;
@@ -103,5 +107,9 @@ const submitForm = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.join {
+  color: #0030ab;
 }
 </style>

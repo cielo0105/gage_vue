@@ -13,7 +13,6 @@ const props = defineProps({ width: String, height: String, msg: String, type: St
   flex-shrink: 0;
   border-radius: 1.875rem;
   background: #fff;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
   border: none;
   margin: 0.5rem 0;
 }
