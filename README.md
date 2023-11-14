@@ -44,3 +44,5 @@ DB 구축 : select한 결과를 캡쳐해 주세요
 ![write](/uploads/8553eabcd398d3750b16ec9c05b34fa6/write.gif)!
 ![noticedb](/uploads/a59e120fa7d9059d469f8cbb1df398b3/noticedb.png)
 
+## 공지사항 등록, 수정 삭제
+![공지사항_등록__수정__삭제](/uploads/6a4ab77ca8c0912b5f2a94d7687d07a2/공지사항_등록__수정__삭제.gif)
