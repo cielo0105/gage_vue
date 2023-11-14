@@ -16,7 +16,7 @@ const numbering = (value, division) => {
 function setUnitText(numbers) {
   const unit = ['천', '억']
   return numbers.map((number, index) =>
-    !!number ? numberFormat(number) + unit[unit.length - 1 - index] : number
+    number ? numberFormat(number) + unit[unit.length - 1 - index] : number
   )
 }
 
