@@ -4,7 +4,7 @@ import SearchBox from '@/components/map/SearchBox.vue'
 import AptInfoBox from '@/components/map/AptInfoBox.vue'
 import { getAptList } from '@/components/api/getAptList.js'
 import { getAptDealInfo } from '@/components/api/getAptDealInfo.js'
-import { changeMoney } from '@/components/utils/changeMoney.js'
+import { changeMoney } from '@/util/changeMoney.js'
 
 let map, geocoder
 let markers = []

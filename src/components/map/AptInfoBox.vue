@@ -1,5 +1,5 @@
 <script setup>
-import { changeMoney } from '@/components/utils/changeMoney.js'
+import { changeMoney } from '@/util/changeMoney.js'
 import VAddress from '@/components/map/VAddress.vue'
 defineProps({ apt: Object })
 </script>
