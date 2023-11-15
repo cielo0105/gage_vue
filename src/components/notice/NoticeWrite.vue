@@ -58,7 +58,8 @@ function writeArticle() {
   registArticle(
     article.value,
     ({ data }) => {
-      console.log('data:  ', data), router.push({ name: 'notice-list' })
+      console.log('data:  ', data)
+      router.push({ name: 'notice-list' })
     },
     (error) => {
       console.log(error)
