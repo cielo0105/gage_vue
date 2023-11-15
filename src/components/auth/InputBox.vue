@@ -1,5 +1,11 @@
 <script setup>
-const props = defineProps({ modelValue: String, width: String, height: String, type: String })
+const props = defineProps({
+  modelValue: String,
+  width: String,
+  height: String,
+  type: String,
+  label: String
+})
 // const props = defineProps(['modelValue', 'width', 'height', 'type'])
 const emit = defineEmits(['update:modelValue'])
 const handleInput = ($event) => {
@@ -8,13 +14,16 @@ const handleInput = ($event) => {
 </script>
 
 <template>
-  <input
-    class="input-box"
-    :value="modelValue"
-    @input="handleInput"
-    :style="{ width: props.width, height: props.height }"
-    :type="props.type"
-  />
+  <div>
+    <label class="text">{{ label }}</label>
+    <input
+      class="input-box"
+      :value="modelValue"
+      @input="handleInput"
+      :style="{ width: props.width, height: props.height }"
+      :type="props.type"
+    />
+  </div>
 </template>
 
 <style scoped>
@@ -27,5 +36,14 @@ const handleInput = ($event) => {
   outline: none;
   padding: 0.25rem 1rem 0.1rem 1rem;
   font-size: 1.8rem;
+}
+
+.text {
+  color: #6e2add;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: block;
+  padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 </style>

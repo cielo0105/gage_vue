@@ -1,16 +1,30 @@
 <script setup>
-import SignBtn from '@/components/auth/SignBtn.vue'
-import InputBox from '@/components/auth/InputBox.vue'
 import { ref } from 'vue'
-import axios from 'axios'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
+import { InputBox, SignBtn, VAuthLayout } from '@/components/auth'
+
 const router = useRouter()
 
 const userid = ref('')
 const userpass = ref('')
 
+const errMsg = ref({ show: false, msg: '' })
+
 const submitForm = () => {
   console.log(userid.value, userpass.value)
+
+  if (userid.value.length === 0) {
+    errMsg.value.show = true
+    errMsg.value.msg = '아이디를 입력해주세요.'
+    return
+  } else if (userpass.value.length === 0) {
+    errMsg.value.show = true
+    errMsg.value.msg = '비밀번호를 입력해주세요.'
+    return
+  } else {
+    errMsg.value.show = false
+  }
 
   const url = 'http://localhost:8080/member/login'
   const requestData = {
@@ -32,84 +46,47 @@ const submitForm = () => {
 </script>
 
 <template>
-  <div class="big-container">
-    <div class="container">
-      <h3 class="title">LOGIN</h3>
-      <div class="join-msg">
-        어서오세요! 아직 저희 사이트의 회원이 아니시면 <br />
-        <router-link to="/join" class="join">회원가입</router-link>을 먼저 진행해주세요!
-      </div>
-      <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Google" /><br />
+  <v-auth-layout title="LOGIN" subTitle="">
+    <template #sub>
+      어서오세요! 아직 저희 사이트의 회원이 아니시면 <br />
+      <router-link to="/join" class="join">회원가입</router-link>을 먼저 진행해주세요!
+    </template>
+    <template #social>
       <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Kakao" />
-      <div class="or">or</div>
+    </template>
+    <template #form>
       <form v-on:submit.prevent="submitForm" class="login-form">
-        <div>
-          <label class="text">아이디</label>
-          <InputBox v-model="userid" width="36.875rem" height="3.6875rem" type="text" />
-        </div>
-
-        <div>
-          <label class="text">비밀번호</label>
-          <InputBox v-model="userpass" width="36.875rem" height="3.6875rem" type="password" />
-        </div>
+        <InputBox
+          v-model="userid"
+          width="36.875rem"
+          height="3.6875rem"
+          type="text"
+          label="아이디(이메일)"
+        />
+        <InputBox
+          v-model="userpass"
+          width="36.875rem"
+          height="3.6875rem"
+          type="password"
+          label="비밀번호"
+        />
+        <div class="err-msg" v-show="errMsg.show">{{ errMsg.msg }}</div>
         <SignBtn type="submit" width="25.5rem" height="2.875rem" msg="로그인" />
       </form>
-    </div>
-  </div>
+    </template>
+  </v-auth-layout>
 </template>
 
 <style scoped>
-.big-container {
-  display: flex;
-  justify-content: center;
-}
-.container {
-  border-radius: 0.9375rem;
-  background: rgba(255, 255, 255, 0.29);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  padding: 7rem;
-  margin-bottom: 4rem;
-}
-.title {
-  color: #6e2add;
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 900;
-}
-
-.join-msg {
-  color: #fff;
-  text-align: center;
-  margin-bottom: 5rem;
-  font-size: 1.5rem;
-}
-
-.or {
-  color: #fff;
-  font-size: 1.25rem;
-  margin-bottom: 5rem;
-  margin-top: 1rem;
-  font-weight: 400;
-}
-.text {
-  color: #6e2add;
-  font-size: 1.25rem;
-  font-weight: 700;
-  display: block;
-  padding-left: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
 .login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .join {
   color: #0030ab;
+}
+.err-msg {
+  color: #cd00a0;
 }
 </style>

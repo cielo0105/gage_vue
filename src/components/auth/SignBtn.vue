@@ -21,5 +21,6 @@ const props = defineProps({ width: String, height: String, msg: String, type: St
   text-align: center;
   line-height: normal;
   font-size: 1.25rem;
+  font-weight: 700;
 }
 </style>
