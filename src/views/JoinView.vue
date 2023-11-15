@@ -1,55 +1,57 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 import { InputBox, SignBtn, VAuthLayout } from '@/components/auth'
+import { registMember } from '@/components/api/memberApi.js'
 
 const router = useRouter()
 
-const userid = ref('')
-const userpass = ref('')
-const passcheck = ref('')
-const username = ref('')
-const emailFlag = ref(true)
-const passFlag = ref(true)
+const member = ref({
+  id: '',
+  pass: '',
+  passcheck: '',
+  name: '',
+  emailFlag: true,
+  passFlag: true
+})
 // const regex = '^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
 const regex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 const passwordCheck = () => {
-  if (userpass.value === passcheck.value) {
-    passFlag.value = true
-  } else passFlag.value = false
+  if (member.value.pass === member.value.passcheck) {
+    member.value.passFlag = true
+  } else member.value.passFlag = false
 }
 
 const emailCheck = () => {
-  if (regex.test(userid.value) === true) {
-    emailFlag.value = true
-  } else emailFlag.value = false
+  if (regex.test(member.value.id) === true) {
+    member.value.emailFlag = true
+  } else member.value.emailFlag = false
 }
 
 const submitForm = () => {
-  console.log(userid.value, userpass.value, username.value)
-  if (!emailFlag.value) alert('이메일 형식 확인')
-  else if (!passFlag.value) alert('비밀번호 확인')
+  console.log(member.value.id, member.value.pass, member.value.name)
+  if (!member.value.emailFlag) alert('이메일 형식 확인')
+  else if (!member.value.passFlag) alert('비밀번호 확인')
   else {
-    const url = 'http://localhost:8080/member/regist'
     const requestData = {
-      userId: userid.value,
-      userPass: userpass.value,
-      userName: username.value
+      userId: member.value.id,
+      userPass: member.value.pass,
+      userName: member.value.name
     }
 
-    axios
-      .post(url, requestData)
-      .then((response) => {
-        console.log('회원가입 성공', response)
+    registMember(
+      requestData,
+      ({ data }) => {
+        console.log('회원가입 성공!! data==', data)
         router.push({ name: 'login' })
-      })
-      .catch((error) => {
-        console.error('회원가입 실패', error)
-      })
+      },
+      (err) => {
+        console.log('회원가입 실패ㅜㅜ', err.response.data.msg)
+      }
+    )
   }
 }
 </script>
@@ -63,32 +65,32 @@ const submitForm = () => {
     <template #form>
       <form @submit.prevent="submitForm" class="join-form">
         <input-box
-          v-model="userid"
+          v-model="member.id"
           width="36.875rem"
           height="3.6875rem"
           type="text"
           @input="emailCheck"
           label="이메일"
         />
-        <span v-if="!emailFlag">이메일 형식이 올바르지 않습니다</span>
+        <span v-if="!member.emailFlag">이메일 형식이 올바르지 않습니다</span>
         <input-box
-          v-model="userpass"
+          v-model="member.pass"
           width="36.875rem"
           height="3.6875rem"
           type="password"
           label="비밀번호"
         />
         <input-box
-          v-model="passcheck"
+          v-model="member.passcheck"
           width="36.875rem"
           height="3.6875rem"
           type="password"
           @input="passwordCheck"
           label="비밀번호 확인"
         />
-        <span v-if="!passFlag">비밀번호가 일치하지 않습니다.</span>
+        <span v-if="!member.passFlag">비밀번호가 일치하지 않습니다.</span>
         <input-box
-          v-model="username"
+          v-model="member.name"
           width="36.875rem"
           height="3.6875rem"
           type="text"

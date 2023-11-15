@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
 import { InputBox, SignBtn, VAuthLayout } from '@/components/auth'
+import { loginMember } from '@/components/api/memberApi'
 
 const router = useRouter()
 
@@ -26,22 +26,21 @@ const submitForm = () => {
     errMsg.value.show = false
   }
 
-  const url = 'http://localhost:8080/member/login'
   const requestData = {
     userId: userid.value,
     userPass: userpass.value
   }
 
-  axios
-    .post(url, requestData)
-    .then((response) => {
-      console.log('로그인 성공', response)
+  loginMember(
+    requestData,
+    ({ data }) => {
+      console.log('로그인 성공!! data==', data)
       router.push({ name: 'home' })
-    })
-    .catch((error) => {
-      console.error('로그인 실패', error)
-      alert('아이디/비밀번호 확인')
-    })
+    },
+    (err) => {
+      console.log('로그인 실패ㅜㅜ', err.response.data.msg)
+    }
+  )
 }
 </script>
 
