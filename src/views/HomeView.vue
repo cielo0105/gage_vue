@@ -11,8 +11,11 @@ import VFooter from '@/components/common/VFooter.vue'
         <h1>당신이 찾던</h1>
         <div class="word">
           <div><div>역세권</div></div>
+          <div><div>넓은</div></div>
           <div><div>혼자 살</div></div>
-          <div><div>치안 좋은</div></div>
+          <div><div>같이 살</div></div>
+          <div><div>학교 근처</div></div>
+          <div><div>직장 근처</div></div>
         </div>
       </div>
       <strong>.zip</strong>
@@ -85,33 +88,61 @@ h1 {
 }
 
 .word div:first-child {
-  animation: show 5s linear infinite;
+  animation: show 12s linear infinite;
+  /* margin-top: -24rem; */
 }
 
 @keyframes show {
   0% {
-    margin-top: -16.875rem;
+    margin-top: -30rem;
   }
   5% {
+    margin-top: -30rem;
+  }
+  /* 1 */
+  16.6% {
+    margin-top: -30rem;
+  }
+  24.9% {
+    margin-top: -24rem;
+  }
+  /* 2 */
+  33.2% {
+    margin-top: -24rem;
+  }
+  41.5% {
+    margin-top: -18rem;
+  }
+  /* 3 */
+  49.8% {
+    margin-top: -18rem;
+  }
+  58.1% {
     margin-top: -12rem;
   }
-  33% {
+  /* 4 */
+  66.4% {
     margin-top: -12rem;
   }
-  38% {
-    margin-top: -5.625rem;
+  74.7% {
+    margin-top: -6rem;
   }
-  66% {
-    margin-top: -5.625rem;
+  /* 5 */
+  83% {
+    margin-top: -6rem;
   }
-  71% {
-    margin-top: 0px;
+  91.33% {
+    margin-top: 0rem;
+  }
+  /* 6 */
+  99.66% {
+    margin-top: 0rem;
   }
   99.99% {
-    margin-top: 0px;
+    margin-top: 0rem;
   }
   100% {
-    margin-top: -16.875rem;
+    margin-top: -30rem;
   }
 }
 
