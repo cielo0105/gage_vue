@@ -35,7 +35,7 @@ const handleInput = ($event) => {
   margin-bottom: 1.87rem;
   outline: none;
   padding: 0.25rem 1rem 0.1rem 1rem;
-  font-size: 1.8rem;
+  font-size: 1.25rem;
 }
 
 .text {

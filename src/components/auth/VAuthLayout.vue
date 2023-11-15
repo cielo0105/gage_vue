@@ -37,8 +37,8 @@ defineProps({
   flex-direction: column;
   align-items: center;
   width: 80%;
-  padding: 7rem;
-  margin-bottom: 4rem;
+  padding: 6rem;
+  margin: 1rem 0 4rem 0;
 }
 .title {
   color: #6e2add;
@@ -49,13 +49,13 @@ defineProps({
 .msg {
   color: #fff;
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   font-size: 1.5rem;
 }
 .or {
   color: #fff;
   font-size: 1.25rem;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   margin-top: 1rem;
 }
 </style>
