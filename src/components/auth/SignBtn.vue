@@ -10,16 +10,20 @@ const props = defineProps({ width: String, height: String, msg: String, type: St
 
 <style scoped>
 .sign-btn {
-  flex-shrink: 0;
   border-radius: 1.875rem;
   background: #fff;
   border: none;
   margin: 0.5rem 0;
+}
+.sign-btn:hover {
+  background: #6e2add;
+  color: #fff;
 }
 .text {
   color: #6e2add;
   text-align: center;
   line-height: normal;
   font-size: 1.25rem;
+  font-weight: 700;
 }
 </style>
