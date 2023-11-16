@@ -10,6 +10,7 @@ import VFooter from '@/components/common/VFooter.vue'
       <div class="left">
         <h1>당신이 찾던</h1>
         <div class="word">
+          <div><div>직장 근처</div></div>
           <div><div>역세권</div></div>
           <div><div>넓은</div></div>
           <div><div>혼자 살</div></div>
@@ -88,15 +89,15 @@ h1 {
 }
 
 .word div:first-child {
-  animation: show 12s linear infinite;
+  animation: show 5s linear infinite;
   /* margin-top: -24rem; */
 }
 
 @keyframes show {
   0% {
-    margin-top: -30rem;
+    margin-top: -36rem;
   }
-  5% {
+  8.3% {
     margin-top: -30rem;
   }
   /* 1 */
@@ -142,7 +143,7 @@ h1 {
     margin-top: 0rem;
   }
   100% {
-    margin-top: -30rem;
+    margin-top: -36rem;
   }
 }
 
