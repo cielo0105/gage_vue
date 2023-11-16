@@ -15,6 +15,7 @@ const goHome = () => {
     <nav>
       <router-link to="/map">지도</router-link>
       <router-link to="/report">분석</router-link>
+      <router-link to="/news">뉴스</router-link>
       <router-link to="/notice">공지사항</router-link>
       <router-link to="/login" class="login-btn">로그인 / 회원가입</router-link>
     </nav>
