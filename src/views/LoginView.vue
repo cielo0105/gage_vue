@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink } from 'vue-router'
 import { InputBox, SignBtn, VAuthLayout } from '@/components/auth'
 import { loginMember } from '@/components/api/memberApi'
 
@@ -45,7 +45,7 @@ const submitForm = () => {
 </script>
 
 <template>
-  <v-auth-layout title="LOGIN" subTitle="">
+  <v-auth-layout title="LOGIN" showOr="true">
     <template #sub>
       어서오세요! 아직 저희 사이트의 회원이 아니시면 <br />
       <router-link to="/join" class="join">회원가입</router-link>을 먼저 진행해주세요!
@@ -71,6 +71,7 @@ const submitForm = () => {
         />
         <div class="err-msg" v-show="errMsg.show">{{ errMsg.msg }}</div>
         <SignBtn type="submit" width="25.5rem" height="2.875rem" msg="로그인" />
+        <router-link to="/find-pw" class="info-msg">비밀번호가 기억나지 않나요?</router-link>
       </form>
     </template>
   </v-auth-layout>
@@ -82,7 +83,8 @@ const submitForm = () => {
   flex-direction: column;
   align-items: center;
 }
-.join {
+.join,
+.info-msg {
   color: #0030ab;
 }
 .err-msg {

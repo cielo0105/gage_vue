@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   title: String,
-  btnName: String
+  showOr: Boolean
 })
 </script>
 
@@ -17,7 +17,7 @@ defineProps({
       <slot name="social">
         <!-- 소셜 로그인/회원가입 버튼이 위치합니다. -->
       </slot>
-      <div class="or">or</div>
+      <p class="or" v-if="showOr">or</p>
       <slot name="form">
         <!-- 로그인/회원가입 폼이 위치합니다. -->
       </slot>
@@ -57,5 +57,23 @@ defineProps({
   font-size: 1.25rem;
   margin-bottom: 3rem;
   margin-top: 1rem;
+}
+
+.or::before,
+.or::after {
+  width: 20rem;
+  height: 2px;
+  content: ' ';
+  background-color: white;
+  display: inline-block;
+  vertical-align: super;
+}
+
+.or::before {
+  margin-right: 1rem;
+}
+
+.or::after {
+  margin-left: 1rem;
 }
 </style>
