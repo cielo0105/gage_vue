@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { HomeView, JoinView, LoginView, MapView, NoticeView, ReportView } from '@/views'
+import { HomeView, JoinView, LoginView, MapView, NoticeView, ReportView, FindPwView } from '@/views'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +23,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/find-pw',
+      name: 'find-pw',
+      component: FindPwView
     },
     {
       path: '/notice',

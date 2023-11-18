@@ -57,8 +57,11 @@ const submitForm = () => {
 </script>
 
 <template>
-  <v-auth-layout title="회원가입" btnName="가입하기">
-    <template #sub> 간단한 정보를 입력하고, 더욱 편리하게 사이트를 사용해보세요. </template>
+  <v-auth-layout title="회원가입" showOr="true">
+    <template #sub>
+      간단한 정보를 입력하고, 더욱 편리하게 사이트를 사용해보세요. <br />
+      이미 가입하셨다면<router-link to="/login" class="login">로그인</router-link>해주세요!
+    </template>
     <template #social>
       <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Kakao" />
     </template>
@@ -107,5 +110,8 @@ const submitForm = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.login {
+  color: #0030ab;
 }
 </style>
