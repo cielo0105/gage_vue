@@ -1,27 +1,30 @@
 <script setup>
 const props = defineProps({ title: String, color: String })
-
-const clickBtn = () => {
-  console.log('btn 클릭')
-}
 </script>
 
 <template>
-  <button :style="{ background: props.color }" @click="clickBtn()">{{ props.title }}</button>
+  <button class="sign-btn text">
+    {{ props.title }}
+  </button>
 </template>
 
 <style scoped>
-button {
-  width: 6.6875rem;
+.sign-btn {
+  width: 24.4375rem;
   height: 1.9375rem;
   border-radius: 0.9375rem;
-
-  color: #fff;
-  font-size: 0.9375rem;
-  font-weight: 700;
-
+  background: #ffd600;
   border: none;
-  outline: none;
-  cursor: pointer;
+  margin-top: 1rem;
+}
+.sign-btn:hover {
+  color: #fff;
+}
+.text {
+  color: #000000;
+  text-align: center;
+  line-height: normal;
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 </style>

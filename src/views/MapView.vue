@@ -1,15 +1,16 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import SearchBox from '@/components/map/SearchBox.vue'
-import AptInfoBox from '@/components/map/AptInfoBox.vue'
-import { getAptList } from '@/components/api/getAptList.js'
-import { getAptDealInfo } from '@/components/api/getAptDealInfo.js'
+import ReportBox from '@/components/map/ReportBox.vue'
+import MapFilterBox from '../components/map/MapFilterBox.vue'
+
 import { changeMoney } from '@/util/changeMoney.js'
 
 let map, geocoder
 let markers = []
 let aptInfo = ref(null)
 let isShow = ref(false)
+let mainList = ref([])
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -39,25 +40,25 @@ const initMap = () => {
     map.setCenter(new window.kakao.maps.LatLng(lat, lng))
   })
 
-  window.kakao.maps.event.addListener(map, 'tilesloaded', () => getAddr())
+  // window.kakao.maps.event.addListener(map, 'tilesloaded', () => getAddr())
 }
 
 //현재 중심 위치 동 정보 구하기
-const getAddr = () => {
-  let coord = map.getCenter()
-  geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), (e) => {
-    markers.map((m) => m.setMap(null))
-    getApt(e[0].code)
-  })
-}
+// const getAddr = () => {
+//   let coord = map.getCenter()
+//   geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), (e) => {
+//     markers.map((m) => m.setMap(null))
+//     getApt(e[0].code)
+//   })
+// }
 
 //현재 map 중심 동에 위치한 아파트 정보 list로 가져옴.
-const getApt = async (code) => {
-  const aptList = await getAptList(code)
-  for (let apt of aptList) {
-    createMarker(apt)
-  }
-}
+// const getApt = async (code) => {
+//   const aptList = await getAptList(code)
+//   for (let apt of aptList) {
+//     createMarker(apt)
+//   }
+// }
 
 //마커 생성
 const createMarker = (data) => {
@@ -99,8 +100,8 @@ const showDetail = (lat, lon, code) => {
       let road_address = result[0].road_address.address_name
       let address = result[0].address.address_name
 
-      const apt = await getAptDealInfo(code)
-      aptInfo.value = { ...apt, road_address: road_address, address: address }
+      // const apt = await getAptDealInfo(code)
+      // aptInfo.value = { ...apt, road_address: road_address, address: address }
       isShow.value = true
     }
   })
@@ -110,7 +111,9 @@ const showDetail = (lat, lon, code) => {
 <template>
   <div id="map">
     <SearchBox />
-    <AptInfoBox :apt="aptInfo" v-show="isShow" @close-box="isShow = false" />
+    <!-- <ReportBox :apt="aptInfo" @close-box="isShow = false" /> -->
+    <!-- <AptInfoBox :apt="aptInfo" v-show="isShow" @close-box="isShow = false" /> -->
+    <MapFilterBox />
   </div>
 </template>
 
