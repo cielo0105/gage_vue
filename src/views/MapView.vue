@@ -3,14 +3,12 @@ import { onMounted, ref } from 'vue'
 import SearchBox from '@/components/map/SearchBox.vue'
 import ReportBox from '@/components/map/ReportBox.vue'
 import MapFilterBox from '../components/map/MapFilterBox.vue'
-
+import { getGageList } from '@/components/api/gageApi.js'
 import { changeMoney } from '@/util/changeMoney.js'
 
 let map, geocoder
 let markers = []
-let aptInfo = ref(null)
 let isShow = ref(false)
-let mainList = ref([])
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -40,29 +38,40 @@ const initMap = () => {
     map.setCenter(new window.kakao.maps.LatLng(lat, lng))
   })
 
-  // window.kakao.maps.event.addListener(map, 'tilesloaded', () => getAddr())
+  window.kakao.maps.event.addListener(map, 'tilesloaded', () => getAddr())
 }
 
 //현재 중심 위치 동 정보 구하기
-// const getAddr = () => {
-//   let coord = map.getCenter()
-//   geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), (e) => {
-//     markers.map((m) => m.setMap(null))
-//     getApt(e[0].code)
-//   })
-// }
+const getAddr = () => {
+  let coord = map.getCenter()
+  geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), (e) => {
+    markers.map((m) => m.setMap(null))
+    // getApt(e[0].code)
+    console.log('dong위치=========', e[0].code)
+    getGage(e[0].code)
+  })
+}
 
 //현재 map 중심 동에 위치한 아파트 정보 list로 가져옴.
-// const getApt = async (code) => {
-//   const aptList = await getAptList(code)
-//   for (let apt of aptList) {
-//     createMarker(apt)
-//   }
-// }
+const getGage = async (code) => {
+  const gageList = await getGageList(code)
+  console.log('gagelist: ', gageList)
+  for (let gage of gageList) {
+    createMarker(gage)
+  }
+}
+
+// 클러스터 생성
+// const clusterer = new window.kakao.maps.MarkerClusterer({
+//   map: map,
+//   averageCenter: true,
+//   minLevel: 10
+// })
 
 //마커 생성
 const createMarker = (data) => {
   let content = document.createElement('div')
+  // console.log(data)
   content.className = 'overlaybox'
   content.onclick = (e) => {
     let lat = e.target.children[0].value
