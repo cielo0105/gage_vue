@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { HomeView, JoinView, LoginView, MapView, NoticeView, ReportView } from '@/views'
+import { HomeView, JoinView, LoginView, MapView, NoticeView, ReportView, DealView } from '@/views'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +56,24 @@ const router = createRouter({
       path: '/report',
       name: 'report',
       component: ReportView
+    },
+    {
+      path: '/deal',
+      name: 'deal',
+      component: DealView,
+      redirect: { name: 'notice-list' },
+      children: [
+        {
+          path: 'map',
+          name: 'deal-map',
+          component: () => import('@/components/deal/DealMap.vue')
+        },
+        {
+          path: 'regist',
+          name: 'deal-regist',
+          component: () => import('@/components/deal/DealRegist.vue')
+        }
+      ]
     }
   ]
 })
