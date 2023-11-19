@@ -10,20 +10,6 @@ const onSelect = () => {
 }
 </script>
 
-<!-- <template>
-  <div class="dropdown">
-    <button
-      class="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton1"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      {{ selected }}
-    </button>
-  </div>
-</template> -->
-
 <template>
   <select v-model="key" class="form-select form-select-sm dropdown" @change="onSelect">
     <option
