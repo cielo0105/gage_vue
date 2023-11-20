@@ -5,5 +5,6 @@ import MapView from '@/views/MapView.vue'
 import NoticeView from '@/views/NoticeView.vue'
 import ReportView from '@/views/ReportView.vue'
 import NewsView from '@/views/NewsView.vue'
+import DealView from '@/views/DealView.vue'
 
-export { HomeView, JoinView, LoginView, MapView, NoticeView, ReportView, NewsView }
+export { HomeView, JoinView, LoginView, MapView, NoticeView, ReportView, NewsView, DealView }
