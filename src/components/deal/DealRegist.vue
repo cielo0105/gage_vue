@@ -16,12 +16,13 @@ const data = ref({
   selectedType: 'sale',
   amount1: null,
   amount2: null,
-  address: '',
-  addressDetail: '',
+  address: null,
+  addressDetail: null,
   area: null,
   recommend: null,
   floor: null,
   allFloor: null,
+  fileName: null,
   desc: null
 })
 
@@ -153,9 +154,9 @@ const onComplete = (newResult) => {
       <div class="input-img">
         <label class="text">사진</label>
         <div class="filebox">
-          <input class="upload-name" value="첨부파일" placeholder="첨부파일" />
+          <input class="upload-name" placeholder="첨부파일" :value="data.fileName" />
           <label for="file">첨부</label>
-          <input type="file" id="file" />
+          <input type="file" id="file" @change="(e) => (data.fileName = e.target.value)" />
         </div>
       </div>
       <div style="display: flex; margin-bottom: 3rem">
@@ -163,7 +164,6 @@ const onComplete = (newResult) => {
         <textarea
           class="text-area"
           @input="handleInput"
-          :type="type"
           placeholder="매물을 소개해주세요."
         ></textarea>
       </div>
