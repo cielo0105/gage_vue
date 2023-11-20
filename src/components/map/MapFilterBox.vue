@@ -59,7 +59,10 @@ const onChangeMiddle = async (val) => {
 
 const onChangeSub = async (val) => {
   search.value = val
-  result.value = getResult(val)
+}
+
+const searchCode = async () => {
+  result.value = await getResult(search.value)
   console.log('result: ', result)
 }
 </script>
@@ -71,7 +74,7 @@ const onChangeSub = async (val) => {
       <MapFilterDropdown :selectOption="middleList" @onKeySelect="onChangeMiddle" />
       <MapFilterDropdown :selectOption="subList" @onKeySelect="onChangeSub" />
     </section>
-    <MapFilterBtn title="업종 검색" />
+    <MapFilterBtn title="업종 검색" @click="searchCode()" />
   </div>
 </template>
 
