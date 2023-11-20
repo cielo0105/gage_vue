@@ -1,11 +1,19 @@
 <script setup>
 defineProps({
+  modelValue: String,
   label: String,
   width: String,
   height: String,
   type: String,
-  placeholder: String
+  placeholder: String,
+  readonly: Boolean,
+  value: String
 })
+
+const emit = defineEmits(['update:modelValue'])
+const handleInput = ($event) => {
+  emit('update:modelValue', $event.target.value)
+}
 </script>
 
 <template>
@@ -18,6 +26,7 @@ defineProps({
       :style="{ width: width, height: height }"
       :type="type"
       :placeholder="placeholder"
+      :readonly="readonly"
     />
   </div>
 </template>
@@ -32,7 +41,7 @@ defineProps({
 }
 .input {
   border-radius: 0.9375rem;
-  border: 1px solid #000;
+  border: 2px solid #9c9c9c;
   padding: 1rem;
 }
 </style>

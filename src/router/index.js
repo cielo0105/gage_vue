@@ -61,7 +61,7 @@ const router = createRouter({
       path: '/deal',
       name: 'deal',
       component: DealView,
-      redirect: { name: 'notice-list' },
+      redirect: { name: 'deal-map' },
       children: [
         {
           path: 'map',
