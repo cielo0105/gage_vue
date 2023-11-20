@@ -48,7 +48,7 @@ const router = createRouter({
         {
           path: 'modify/:articleno',
           name: 'notice-modify',
-          component: () => import('@/components/board/NoticeModify.vue')
+          component: () => import('@/components/notice/NoticeModify.vue')
         }
       ]
     },

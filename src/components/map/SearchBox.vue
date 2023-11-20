@@ -35,7 +35,7 @@ const search = () => {
 input {
   width: 22.1875rem;
   border-radius: 0.9375rem;
-  border: 2px solid #0030ab;
+  border: 2px solid #5acc00;
   background: #fff;
   padding: 0.5rem;
   outline: none;

@@ -21,10 +21,10 @@ const props = defineProps({ title: String, color: String })
   color: #fff;
 }
 .text {
-  color: #000000;
+  color: #363636;
   text-align: center;
   line-height: normal;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 </style>

@@ -71,7 +71,7 @@ const onChangeSub = async (val) => {
       <MapFilterDropdown :selectOption="middleList" @onKeySelect="onChangeMiddle" />
       <MapFilterDropdown :selectOption="subList" @onKeySelect="onChangeSub" />
     </section>
-    <MapFilterBtn title="상권 분석하기" />
+    <MapFilterBtn title="업종 검색" />
   </div>
 </template>
 
