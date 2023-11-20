@@ -1,11 +1,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { VueDaumPostcode } from 'vue-daum-postcode'
 import DealInput from '@/components/deal/DealInput.vue'
 import DealInputGroup from '@/components/deal/DealInputGroup.vue'
 import { registDeal, setImg } from '@/components/api/dealApi'
 
 let geocoder
+
+const router = useRouter()
 
 const btns = [
   { name: '매매', code: 'sale' },
@@ -83,6 +86,7 @@ const handleRegist = () => {
     dealInfo.value,
     ({ data }) => {
       console.log(data.data)
+      router.push({ name: 'deal-map' })
     },
     (err) => {
       console.log(err)
@@ -213,7 +217,7 @@ const handleRegist = () => {
       <div class="input-img">
         <label class="text">사진</label>
         <div class="filebox">
-          <input class="upload-name" placeholder="첨부파일" :value="dealInfo.fileName" />
+          <input class="upload-name" placeholder="첨부파일" :value="dealInfo.fileName" readonly />
           <label for="file">첨부</label>
           <input type="file" id="file" @change="setGageImg" accept="image/*" />
         </div>
