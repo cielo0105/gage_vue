@@ -1,8 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { VueDaumPostcode } from 'vue-daum-postcode'
 import DealInput from '@/components/deal/DealInput.vue'
 import DealInputGroup from '@/components/deal/DealInputGroup.vue'
+import { registDeal, setImg } from '@/components/api/dealApi'
+
+let geocoder
 
 const btns = [
   { name: '매매', code: 'sale' },
@@ -12,8 +15,8 @@ const btns = [
 
 const postOpen = ref(false)
 
-const data = ref({
-  selectedType: 'sale',
+const dealInfo = ref({
+  type: 'sale',
   amount1: null,
   amount2: null,
   address: null,
@@ -21,14 +24,70 @@ const data = ref({
   area: null,
   recommend: null,
   floor: null,
-  allFloor: null,
+  floorAll: null,
   fileName: null,
-  desc: null
+  img: null,
+  desc: null,
+  lat: null,
+  lon: null
 })
 
+onMounted(() => {
+  if (window.kakao && window.kakao.maps) {
+    initMap()
+  } else {
+    const script = document.createElement('script')
+    script.onload = () => window.kakao.maps.load(initMap)
+    script.src =
+      '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8980521e66956686ad980618b70271ab&libraries=services'
+    document.head.appendChild(script)
+  }
+})
+
+const initMap = () => {
+  geocoder = new window.kakao.maps.services.Geocoder()
+}
+
 const onComplete = (newResult) => {
-  data.value.address = newResult.address
+  dealInfo.value.address = newResult.address
   postOpen.value = false
+  geocoder.addressSearch(newResult.address, (result, status) => {
+    if (status === window.kakao.maps.services.Status.OK) {
+      console.log(result)
+      dealInfo.value.lat = result[0].y
+      dealInfo.value.lon = result[0].x
+    }
+  })
+}
+
+const setGageImg = (e) => {
+  dealInfo.value.fileName = e.target.value
+  let img = new FormData()
+  let file = e.target.files[0]
+  img.append('gage-img', file)
+
+  setImg(
+    img,
+    ({ data }) => {
+      console.log('성공', data.data)
+      dealInfo.value.img = data.data
+    },
+    (err) => {
+      console.log(err)
+    }
+  )
+}
+
+const handleRegist = () => {
+  registDeal(
+    dealInfo.value,
+    ({ data }) => {
+      console.log(data.data)
+    },
+    (err) => {
+      console.log(err)
+    }
+  )
 }
 </script>
 
@@ -44,12 +103,12 @@ const onComplete = (newResult) => {
       <deal-input-group
         label="매매 종류"
         :btns="btns"
-        :selected="data.selectedType"
-        @selectType="(e) => (data.selectedType = e)"
+        :selected="dealInfo.type"
+        @selectType="(e) => (dealInfo.type = e)"
       />
       <deal-input
-        v-if="data.selectedType === 'sale'"
-        v-model="data.amount1"
+        v-if="dealInfo.type === 'sale'"
+        v-model="dealInfo.amount1"
         label="매매가"
         width="30rem"
         height="2.5rem"
@@ -58,8 +117,8 @@ const onComplete = (newResult) => {
         style="margin-bottom: 3rem"
       />
       <deal-input
-        v-if="data.selectedType === 'lease'"
-        v-model="data.amount1"
+        v-if="dealInfo.type === 'lease'"
+        v-model="dealInfo.amount1"
         label="보증금"
         width="30rem"
         height="2.5rem"
@@ -67,9 +126,9 @@ const onComplete = (newResult) => {
         placeholder="보증금을 입력해주세요"
         style="margin-bottom: 3rem"
       />
-      <div style="margin-bottom: 3rem" v-if="data.selectedType === 'monthly'">
+      <div style="margin-bottom: 3rem" v-if="dealInfo.type === 'monthly'">
         <deal-input
-          v-model="data.amount1"
+          v-model="dealInfo.amount1"
           label="보증금"
           width="11.5rem"
           height="2.5rem"
@@ -78,7 +137,7 @@ const onComplete = (newResult) => {
           style="margin-right: 1rem"
         />
         <deal-input
-          v-model="data.amount2"
+          v-model="dealInfo.amount2"
           label="월세"
           width="11.5rem"
           height="2.5rem"
@@ -88,7 +147,7 @@ const onComplete = (newResult) => {
       </div>
       <div style="margin-bottom: 0.5rem">
         <deal-input
-          v-model="data.address"
+          v-model="dealInfo.address"
           label="주소"
           width="25rem"
           height="2.5rem"
@@ -106,7 +165,7 @@ const onComplete = (newResult) => {
         </button>
       </div>
       <deal-input
-        v-model="data.addressDetail"
+        v-model="dealInfo.addressDetail"
         label=""
         width="30rem"
         height="2.5rem"
@@ -115,7 +174,7 @@ const onComplete = (newResult) => {
         style="margin-bottom: 3rem"
       />
       <deal-input
-        v-model="data.area"
+        v-model="dealInfo.area"
         label="전용 면적"
         width="30rem"
         height="2.5rem"
@@ -124,7 +183,7 @@ const onComplete = (newResult) => {
         style="margin-bottom: 3rem"
       />
       <deal-input
-        v-model="data.recommend"
+        v-model="dealInfo.recommend"
         label="추천 업종"
         width="30rem"
         height="2.5rem"
@@ -134,7 +193,7 @@ const onComplete = (newResult) => {
       />
       <div style="margin-bottom: 3rem">
         <deal-input
-          v-model="data.floor"
+          v-model="dealInfo.floor"
           label="층수"
           width="11.5rem"
           height="2.5rem"
@@ -143,7 +202,7 @@ const onComplete = (newResult) => {
           style="margin-right: 1rem"
         />
         <deal-input
-          v-model="data.allFloor"
+          v-model="dealInfo.floorAll"
           label="총 층수"
           width="11.5rem"
           height="2.5rem"
@@ -154,9 +213,9 @@ const onComplete = (newResult) => {
       <div class="input-img">
         <label class="text">사진</label>
         <div class="filebox">
-          <input class="upload-name" placeholder="첨부파일" :value="data.fileName" />
+          <input class="upload-name" placeholder="첨부파일" :value="dealInfo.fileName" />
           <label for="file">첨부</label>
-          <input type="file" id="file" @change="(e) => (data.fileName = e.target.value)" />
+          <input type="file" id="file" @change="setGageImg" accept="image/*" />
         </div>
       </div>
       <div style="display: flex; margin-bottom: 3rem">
@@ -165,9 +224,10 @@ const onComplete = (newResult) => {
           class="text-area"
           @input="handleInput"
           placeholder="매물을 소개해주세요."
+          v-model="dealInfo.desc"
         ></textarea>
       </div>
-      <button class="regist-btn">등록</button>
+      <button class="regist-btn" @click="handleRegist">등록</button>
     </div>
   </div>
 </template>
