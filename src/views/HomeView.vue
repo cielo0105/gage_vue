@@ -4,43 +4,46 @@ import VFooter from '@/components/common/VFooter.vue'
 </script>
 
 <template>
-  <section class="home">
-    <div class="home-img"></div>
-    <div class="title">
-      <div class="left">
-        <h1>당신이 찾던</h1>
-        <div class="word">
-          <div><div>직장 근처</div></div>
-          <div><div>역세권</div></div>
-          <div><div>넓은</div></div>
-          <div><div>혼자 살</div></div>
-          <div><div>같이 살</div></div>
-          <div><div>학교 근처</div></div>
-          <div><div>직장 근처</div></div>
+  <div>
+    <section class="home">
+      <div class="title">
+        <div class="left">
+          <!-- <div class="home-img"></div> -->
+          <h1>나도 이제</h1>
+          <div class="word">
+            <div><div>편의점</div></div>
+            <div><div>카페</div></div>
+            <div><div>네일샵</div></div>
+            <div><div>마트</div></div>
+            <div><div>식당</div></div>
+            <div><div>빵집</div></div>
+            <div><div>편의점</div></div>
+          </div>
+          <h1>사장</h1>
         </div>
       </div>
-      <strong>.zip</strong>
+    </section>
+    <section class="sub-title">
+      <span>상권 분석과 상가 매물을 확인하고</span>
+      <span>여러분의 창업을 시작해보세요!</span>
+      <router-link class="start-btn" to="/map">시작하기</router-link>
+    </section>
+    <div class="info1">
+      <img src="../assets/info1.png" alt="info1" />
     </div>
-  </section>
-  <section class="sub-title">
-    <span>국토교통부에서 제공된 데이터를 기반으로</span>
-    <span>주택 실거래가 정보를 확인해보세요!</span>
-    <router-link class="start-btn" to="/map">시작하기</router-link>
-  </section>
-  <div class="info1">
-    <img src="../assets/info1.png" alt="info1" />
-  </div>
-  <div class="info2">
-    <img src="../assets/info2.png" alt="info2" />
-  </div>
-  <div class="info3">
-    <img src="../assets/info3.png" alt="info3" />
+    <div class="info2">
+      <img src="../assets/info2.png" alt="info2" />
+    </div>
+    <div class="info3">
+      <img src="../assets/info3.png" alt="info3" />
+    </div>
   </div>
   <VFooter />
 </template>
 
 <style scoped>
 .home {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,6 +54,7 @@ import VFooter from '@/components/common/VFooter.vue'
   width: 188px;
   height: 208px;
   background-image: url('../assets/HomeIcon.png');
+  background-size: contain;
 }
 
 .title {
@@ -163,21 +167,20 @@ strong {
 }
 
 span {
-  color: #fff;
   text-align: center;
   font-size: 1.75rem;
   font-weight: 300;
 }
 
 .start-btn {
-  color: #6e2add;
+  color: black;
   text-align: center;
   font-size: 1.5rem;
   font-weight: 500;
   text-decoration: none;
 
   border-radius: 0.625rem;
-  background: rgba(255, 255, 255, 0.6);
+  background: #ffd600;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
   padding: 0.8rem 3rem;
   margin-top: 1.3rem;
