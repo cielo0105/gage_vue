@@ -14,7 +14,8 @@ const middleList = ref([{ text: '중분류', value: '' }]) // 중분류
 const subList = ref([{ text: '소분류', value: '' }]) // 소분류
 const result = ref([])
 const search = ref('')
-
+const props = defineProps({ modelValue: String })
+const emit = defineEmits(['update:modelValue'])
 onMounted(() => {
   getMain()
 })
@@ -62,7 +63,8 @@ const onChangeSub = async (val) => {
 }
 
 const searchCode = async () => {
-  result.value = await getResult(search.value)
+  // result.value = await getResult(search.value)
+  emit('update:modelValue', search.value)
   console.log('result: ', result)
 }
 </script>
