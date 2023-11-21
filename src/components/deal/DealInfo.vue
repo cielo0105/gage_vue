@@ -1,32 +1,73 @@
-<script setup></script>
+<script setup>
+import { computed } from 'vue'
+import VAddress from '@/components/map/VAddress.vue'
+import { changeMoney } from '@/util/changeMoney.js'
+const prop = defineProps({
+  info: Object
+})
+
+const dealType = computed(() => {
+  if (prop.info) {
+    if (prop.info?.type === 'sale') return `매매 ${changeMoney(prop.info?.amount1)}`
+    else if (prop.info?.type === 'lease') return `전세 ${changeMoney(prop.info?.amount1)}`
+    else return `월세 ${changeMoney(prop.info?.amount1)}/${prop.info?.amount2}`
+  } else {
+    return ''
+  }
+})
+
+const getImg = (img) => {
+  return new URL(img, import.meta.url).href
+}
+</script>
 
 <template>
-  <div class="dealinfo-box">
-    <div class="header">
-      <strong class="title">월세 1000/50</strong>
-      <button class="close-btn" @click="$emit('close-box')">✕</button>
+  <div style="display: flex; flex-direction: column">
+    <div class="dealinfo-box">
+      <header class="header">
+        <strong class="title">{{ dealType }}</strong>
+        <button class="close-btn" @click="$emit('close-box')">✕</button>
+      </header>
+      <VAddress
+        title="주소"
+        :address="`${info?.address} ${info?.addressDetail}`"
+        style="padding: 0 2rem"
+      />
+      <hr />
+      <div class="content">
+        <!-- <img :src="getImg(info?.img)" alt="img" v-if="info?.img" class="info-img" /> -->
+        <b>전용 면적</b>
+        <span>{{ info?.area }} ㎡ </span>
+        <br />
+        <b>층수</b>
+        <span>{{ info?.floor }}층 / {{ info?.floorAll }}층 </span>
+        <br />
+        <b>추천업종</b>
+        <span>{{ info?.recommend }} </span>
+        <br />
+        <hr />
+        <b>상세 설명</b>
+        <p>{{ info?.desc }}</p>
+      </div>
+    </div>
+    <div class="footer">
+      <button class="chat-btn">채팅하기</button>
     </div>
   </div>
 </template>
 
 <style scoped>
 .dealinfo-box {
-  position: absolute;
-  z-index: 10;
-  top: 1rem;
-  left: 1rem;
-
   width: 30rem;
-  height: fit-content;
-  border-radius: 0.9375rem;
+  height: 88%;
   background: #fff;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 2rem;
 }
 .dealinfo-box .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 0.4rem;
+  padding: 2rem 2rem 0 2rem;
 }
 .close-btn {
   font-size: 1.3rem;
@@ -38,5 +79,38 @@
   color: #000;
   font-size: 1.2rem;
   font-weight: 700;
+}
+.content {
+  padding: 0 2rem;
+}
+.info-img {
+  width: 100%;
+}
+
+b {
+  display: inline-block;
+  width: 40%;
+  margin-bottom: 0.7rem;
+}
+
+.footer {
+  border-top: 2px solid #eee;
+  height: 12%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-btn {
+  width: 10.3125rem;
+  height: 2.525rem;
+  border: none;
+  border-radius: 0.625rem;
+  background: #ffd600;
+  color: #000;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
 }
 </style>

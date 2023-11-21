@@ -3,10 +3,15 @@ defineProps({ title: String, address: String })
 </script>
 
 <template>
-  <div>
+  <div class="address">
     <span class="badge rounded-pill text-bg-secondary me-2">{{ title }}</span>
     <span>{{ address }}</span>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.address {
+  display: flex;
+  align-items: center;
+}
+</style>
