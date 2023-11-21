@@ -12,7 +12,7 @@ const goHome = () => {
 <template>
   <header>
     <!-- <LogoIcon @click="goHome()" class="logo" /> -->
-    <img src="../../assets/logo.png" alt="logo" @click="goHome()" class="logo" />
+    <img src="../../assets/Group 135.png" alt="logo" @click="goHome()" class="logo" />
     <nav>
       <router-link to="/map">지도</router-link>
       <router-link to="/deal">거래</router-link>
@@ -27,7 +27,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 11rem;
+  padding: 1rem 3.2rem;
   background: #fff;
   /* box-shadow: 0px 5px 3px 0px #ececec; */
 }
