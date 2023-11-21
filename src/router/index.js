@@ -75,7 +75,9 @@ const router = createRouter({
         }
       ]
     }
-  ]
+  ],
+  linkActiveClass: "route-active",
+  linkExactActiveClass: "route-active"
 })
 
 export default router

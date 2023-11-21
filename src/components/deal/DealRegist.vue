@@ -95,142 +95,144 @@ const handleRegist = () => {
 </script>
 
 <template>
-  <div class="post-box" v-if="postOpen" @click="() => (postOpen = false)">
-    <div class="post-container" @click.stop="">
-      <VueDaumPostcode @complete="onComplete" class="postcode" />
+  <div style="width: 100%">
+    <div class="post-box" v-if="postOpen" @click="() => (postOpen = false)">
+      <div class="post-container" @click.stop="">
+        <VueDaumPostcode @complete="onComplete" class="postcode" />
+      </div>
     </div>
-  </div>
-  <div class="big-container">
-    <div class="container">
-      <h3 class="title">매물 등록</h3>
-      <deal-input-group
-        label="매매 종류"
-        :btns="btns"
-        :selected="dealInfo.type"
-        @selectType="(e) => (dealInfo.type = e)"
-      />
-      <deal-input
-        v-if="dealInfo.type === 'sale'"
-        v-model="dealInfo.amount1"
-        label="매매가"
-        width="30rem"
-        height="2.5rem"
-        type="text"
-        placeholder="매매가를 입력해주세요"
-        style="margin-bottom: 3rem"
-      />
-      <deal-input
-        v-if="dealInfo.type === 'lease'"
-        v-model="dealInfo.amount1"
-        label="보증금"
-        width="30rem"
-        height="2.5rem"
-        type="text"
-        placeholder="보증금을 입력해주세요"
-        style="margin-bottom: 3rem"
-      />
-      <div style="margin-bottom: 3rem" v-if="dealInfo.type === 'monthly'">
+    <div class="big-container">
+      <div class="container">
+        <h3 class="title">매물 등록</h3>
+        <deal-input-group
+          label="매매 종류"
+          :btns="btns"
+          :selected="dealInfo.type"
+          @selectType="(e) => (dealInfo.type = e)"
+        />
         <deal-input
+          v-if="dealInfo.type === 'sale'"
+          v-model="dealInfo.amount1"
+          label="매매가"
+          width="30rem"
+          height="2.5rem"
+          type="text"
+          placeholder="매매가를 입력해주세요"
+          style="margin-bottom: 3rem"
+        />
+        <deal-input
+          v-if="dealInfo.type === 'lease'"
           v-model="dealInfo.amount1"
           label="보증금"
-          width="11.5rem"
+          width="30rem"
           height="2.5rem"
           type="text"
-          placeholder="보증금"
-          style="margin-right: 1rem"
+          placeholder="보증금을 입력해주세요"
+          style="margin-bottom: 3rem"
         />
-        <deal-input
-          v-model="dealInfo.amount2"
-          label="월세"
-          width="11.5rem"
-          height="2.5rem"
-          type="text"
-          placeholder="월세"
-        />
-      </div>
-      <div style="margin-bottom: 0.5rem">
-        <deal-input
-          v-model="dealInfo.address"
-          label="주소"
-          width="25rem"
-          height="2.5rem"
-          type="text"
-          placeholder="주소를 입력해주세요"
-          style="margin-right: 1rem"
-          readonly
-          @click="() => (postOpen = true)"
-        />
-        <button
-          style="width: 4rem; height: 2.5rem; border-radius: 1rem; background: white"
-          @click="() => (postOpen = true)"
-        >
-          찾기
-        </button>
-      </div>
-      <deal-input
-        v-model="dealInfo.addressDetail"
-        label=""
-        width="30rem"
-        height="2.5rem"
-        type="text"
-        placeholder="상세 주소를 입력해주세요"
-        style="margin-bottom: 3rem"
-      />
-      <deal-input
-        v-model="dealInfo.area"
-        label="전용 면적"
-        width="30rem"
-        height="2.5rem"
-        type="text"
-        placeholder="전용 면적을 입력해주세요"
-        style="margin-bottom: 3rem"
-      />
-      <deal-input
-        v-model="dealInfo.recommend"
-        label="추천 업종"
-        width="30rem"
-        height="2.5rem"
-        type="text"
-        placeholder="추천 업종을 입력해주세요"
-        style="margin-bottom: 3rem"
-      />
-      <div style="margin-bottom: 3rem">
-        <deal-input
-          v-model="dealInfo.floor"
-          label="층수"
-          width="11.5rem"
-          height="2.5rem"
-          type="text"
-          placeholder="층수"
-          style="margin-right: 1rem"
-        />
-        <deal-input
-          v-model="dealInfo.floorAll"
-          label="총 층수"
-          width="11.5rem"
-          height="2.5rem"
-          type="text"
-          placeholder="총 층수"
-        />
-      </div>
-      <div class="input-img">
-        <label class="text">사진</label>
-        <div class="filebox">
-          <input class="upload-name" placeholder="첨부파일" :value="dealInfo.fileName" readonly />
-          <label for="file">첨부</label>
-          <input type="file" id="file" @change="setGageImg" accept="image/*" />
+        <div style="margin-bottom: 3rem" v-if="dealInfo.type === 'monthly'">
+          <deal-input
+            v-model="dealInfo.amount1"
+            label="보증금"
+            width="11.5rem"
+            height="2.5rem"
+            type="text"
+            placeholder="보증금"
+            style="margin-right: 1rem"
+          />
+          <deal-input
+            v-model="dealInfo.amount2"
+            label="월세"
+            width="11.5rem"
+            height="2.5rem"
+            type="text"
+            placeholder="월세"
+          />
         </div>
+        <div style="margin-bottom: 0.5rem">
+          <deal-input
+            v-model="dealInfo.address"
+            label="주소"
+            width="25rem"
+            height="2.5rem"
+            type="text"
+            placeholder="주소를 입력해주세요"
+            style="margin-right: 1rem"
+            readonly
+            @click="() => (postOpen = true)"
+          />
+          <button
+            style="width: 4rem; height: 2.5rem; border-radius: 1rem; background: white"
+            @click="() => (postOpen = true)"
+          >
+            찾기
+          </button>
+        </div>
+        <deal-input
+          v-model="dealInfo.addressDetail"
+          label=""
+          width="30rem"
+          height="2.5rem"
+          type="text"
+          placeholder="상세 주소를 입력해주세요"
+          style="margin-bottom: 3rem"
+        />
+        <deal-input
+          v-model="dealInfo.area"
+          label="전용 면적"
+          width="30rem"
+          height="2.5rem"
+          type="text"
+          placeholder="전용 면적을 입력해주세요"
+          style="margin-bottom: 3rem"
+        />
+        <deal-input
+          v-model="dealInfo.recommend"
+          label="추천 업종"
+          width="30rem"
+          height="2.5rem"
+          type="text"
+          placeholder="추천 업종을 입력해주세요"
+          style="margin-bottom: 3rem"
+        />
+        <div style="margin-bottom: 3rem">
+          <deal-input
+            v-model="dealInfo.floor"
+            label="층수"
+            width="11.5rem"
+            height="2.5rem"
+            type="text"
+            placeholder="층수"
+            style="margin-right: 1rem"
+          />
+          <deal-input
+            v-model="dealInfo.floorAll"
+            label="총 층수"
+            width="11.5rem"
+            height="2.5rem"
+            type="text"
+            placeholder="총 층수"
+          />
+        </div>
+        <div class="input-img">
+          <label class="text">사진</label>
+          <div class="filebox">
+            <input class="upload-name" placeholder="첨부파일" :value="dealInfo.fileName" readonly />
+            <label for="file">첨부</label>
+            <input type="file" id="file" @change="setGageImg" accept="image/*" />
+          </div>
+        </div>
+        <div style="display: flex; margin-bottom: 3rem">
+          <label class="text">설명</label>
+          <textarea
+            class="text-area"
+            @input="handleInput"
+            placeholder="매물을 소개해주세요."
+            v-model="dealInfo.desc"
+          ></textarea>
+        </div>
+        <button class="regist-btn" @click="handleRegist">등록</button>
       </div>
-      <div style="display: flex; margin-bottom: 3rem">
-        <label class="text">설명</label>
-        <textarea
-          class="text-area"
-          @input="handleInput"
-          placeholder="매물을 소개해주세요."
-          v-model="dealInfo.desc"
-        ></textarea>
-      </div>
-      <button class="regist-btn" @click="handleRegist">등록</button>
     </div>
   </div>
 </template>

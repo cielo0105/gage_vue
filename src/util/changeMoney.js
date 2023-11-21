@@ -25,3 +25,9 @@ const NUMBER_FORMAT_REGX = /\B(?=(\d{3})+(?!\d))/g
 const numberFormat = (value) => {
   return value.toString().replace(NUMBER_FORMAT_REGX, ',')
 }
+
+export const changeType = (type) => {
+  if (type === 'sale') return '매매'
+  else if (type === 'lease') return '전세'
+  else return '월세'
+}

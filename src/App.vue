@@ -51,7 +51,7 @@ import VHeader from '@/components/common/VHeader.vue'
   justify-content: center;
   width: 78px;
   height: 111px;
-  background: url('./assets/deal_marker.png') no-repeat;
+  background: url('./assets/marker_deal.png') no-repeat;
   background-size: contain;
   cursor: pointer;
 }

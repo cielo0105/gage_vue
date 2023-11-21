@@ -3,16 +3,15 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import DealInfo from '@/components/deal/DealInfo.vue'
 import { getList } from '@/components/api/dealApi.js'
-import { changeMoney } from '@/util/changeMoney.js'
+import { changeMoney, changeType } from '@/util/changeMoney.js'
 
 const router = useRouter()
 
 let map
 
 const dupCheck = new Set()
-const dealInfo = ref({
-  type: 'sale'
-})
+const isShow = ref(false)
+const dealInfo = ref(null)
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -70,12 +69,15 @@ const createMarker = (data) => {
   content.className = 'overlaybox-deal'
   content.onclick = () => {
     dealInfo.value = data
+    isShow.value = true
+    map.setCenter(new window.kakao.maps.LatLng(data.lat, data.lon))
+    map.setLevel(1)
   }
 
   content.innerHTML = `
 	  <input type="hidden" name="clickLat" value=${data.lat}>
 	  <input type="hidden" name="clickLng" value=${data.lon}>
-    <div class="type">${data.type}</div>
+    <div class="type">${changeType(data.type)}</div>
 	  <div class="price">${data.amount1}</div>
     `
 
@@ -91,16 +93,14 @@ const createMarker = (data) => {
 </script>
 
 <template>
-  <div id="map">
-    <button class="regist-btn" @click="() => router.push({ name: 'deal-regist' })">매물등록</button>
-    <deal-info :info="dealInfo"></deal-info>
-  </div>
+  <deal-info :info="dealInfo" v-if="isShow" @close-box="() => (isShow = false)"></deal-info>
+  <div id="map"></div>
 </template>
 
 <style scoped>
 #map {
-  width: 100vw;
-  height: calc(100vh - 100.28px);
+  width: 100%;
+  height: calc(100vh - 81.66px);
 }
 
 .regist-btn {

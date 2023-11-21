@@ -27,20 +27,20 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 3rem;
+  padding: 1rem 11rem;
+  background: #fff;
+  /* box-shadow: 0px 5px 3px 0px #ececec; */
 }
-
 .logo {
-  width: 11rem;
+  width: 8rem;
   cursor: pointer;
 }
-
 a {
   color: #363636;
   text-decoration: none;
   margin: 0 1rem;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 .login-btn {
   width: 100%;

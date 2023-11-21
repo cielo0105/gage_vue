@@ -1,35 +1,40 @@
 <script setup>
 import { computed } from 'vue'
+import VAddress from '@/components/map/VAddress.vue'
 const prop = defineProps({
   info: Object
 })
 
 const dealType = computed(() => {
-  if (prop.info.type === 'sale') return '매매'
-  else if (prop.info.type === 'lease') return '전세'
-  else return '월세'
+  if (prop.info) {
+    if (prop.info?.type === 'sale') return `매매 ${prop.info?.amount1}`
+    else if (prop.info?.type === 'lease') return `전세 ${prop.info?.amount1}`
+    else return `월세 ${prop.info?.amount1}/${prop.info?.amount2}`
+  } else {
+    return ''
+  }
 })
 </script>
 
 <template>
   <div class="dealinfo-box">
-    <div class="header">
-      <strong class="title">{{ dealType }} 1000/50</strong>
+    <header class="header">
+      <strong class="title">{{ dealType }}</strong>
       <button class="close-btn" @click="$emit('close-box')">✕</button>
-    </div>
+    </header>
+    <VAddress title="주소" :address="`${info?.address} ${info?.address_detail}`" />
+    <!-- <img
+      src="C:\ssafygageimg\61631829-a801-4e69-a7bf-70d5318a7e20_Ellipse 42.png"
+      alt="img"
+      v-if="info?.img"
+      class="info-img"
+    /> -->
   </div>
 </template>
 
 <style scoped>
 .dealinfo-box {
-  position: absolute;
-  z-index: 10;
-  top: 1rem;
-  left: 1rem;
-
   width: 30rem;
-  height: fit-content;
-  border-radius: 0.9375rem;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 2rem;
@@ -49,5 +54,8 @@ const dealType = computed(() => {
   color: #000;
   font-size: 1.2rem;
   font-weight: 700;
+}
+.info-img {
+  width: 100%;
 }
 </style>
