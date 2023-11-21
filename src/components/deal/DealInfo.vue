@@ -1,9 +1,20 @@
-<script setup></script>
+<script setup>
+import { computed } from 'vue'
+const prop = defineProps({
+  info: Object
+})
+
+const dealType = computed(() => {
+  if (prop.info.type === 'sale') return '매매'
+  else if (prop.info.type === 'lease') return '전세'
+  else return '월세'
+})
+</script>
 
 <template>
   <div class="dealinfo-box">
     <div class="header">
-      <strong class="title">월세 1000/50</strong>
+      <strong class="title">{{ dealType }} 1000/50</strong>
       <button class="close-btn" @click="$emit('close-box')">✕</button>
     </div>
   </div>

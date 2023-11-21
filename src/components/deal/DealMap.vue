@@ -2,10 +2,17 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import DealInfo from '@/components/deal/DealInfo.vue'
+import { getList } from '@/components/api/dealApi.js'
+import { changeMoney } from '@/util/changeMoney.js'
 
 const router = useRouter()
 
 let map
+
+const dupCheck = new Set()
+const dealInfo = ref({
+  type: 'sale'
+})
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -33,13 +40,60 @@ const initMap = () => {
     let lng = p.coords.longitude
     map.setCenter(new window.kakao.maps.LatLng(lat, lng))
   })
+
+  window.kakao.maps.event.addListener(map, 'bounds_changed', function () {
+    const cords = map.getBounds()
+    const requestData = {
+      ha: cords.ha,
+      qa: cords.qa,
+      oa: cords.oa,
+      pa: cords.pa
+    }
+    getList(
+      requestData,
+      ({ data }) => {
+        data.data.list.map((item) => {
+          if (!dupCheck.has(JSON.stringify({ lat: item.lat, lon: item.lon }))) {
+            dupCheck.add(JSON.stringify({ lat: item.lat, lon: item.lon }))
+            createMarker(item)
+          }
+        })
+      },
+      (err) => console.log(err)
+    )
+  })
+}
+
+//마커 생성
+const createMarker = (data) => {
+  let content = document.createElement('div')
+  content.className = 'overlaybox-deal'
+  content.onclick = () => {
+    dealInfo.value = data
+  }
+
+  content.innerHTML = `
+	  <input type="hidden" name="clickLat" value=${data.lat}>
+	  <input type="hidden" name="clickLng" value=${data.lon}>
+    <div class="type">${data.type}</div>
+	  <div class="price">${data.amount1}</div>
+    `
+
+  let position = new window.kakao.maps.LatLng(data.lat, data.lon)
+
+  let customOverlay = new window.kakao.maps.CustomOverlay({
+    position: position,
+    content: content
+  })
+
+  customOverlay.setMap(map)
 }
 </script>
 
 <template>
   <div id="map">
     <button class="regist-btn" @click="() => router.push({ name: 'deal-regist' })">매물등록</button>
-    <deal-info></deal-info>
+    <deal-info :info="dealInfo"></deal-info>
   </div>
 </template>
 

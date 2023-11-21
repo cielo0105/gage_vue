@@ -42,4 +42,30 @@ import VHeader from '@/components/common/VHeader.vue'
   pointer-events: none;
   padding-bottom: 11px;
 }
+
+.overlaybox-deal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 78px;
+  height: 111px;
+  background: url('./assets/deal_marker.png') no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
+.overlaybox-deal .price {
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+  padding-bottom: 67px;
+}
+
+.overlaybox-deal .type {
+  color: #000;
+  font-size: 12px;
+  font-weight: 500;
+}
 </style>

@@ -13,4 +13,8 @@ const setImg = (img, success, fail) => {
   form.post(`${url}/img`, img).then(success).catch(fail)
 }
 
-export { registDeal, setImg }
+const getList = (cords, success, fail) => {
+  local.get(`${url}/list`, { params: cords }).then(success).catch(fail)
+}
+
+export { registDeal, setImg, getList }

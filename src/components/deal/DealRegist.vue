@@ -72,7 +72,6 @@ const setGageImg = (e) => {
   setImg(
     img,
     ({ data }) => {
-      console.log('성공', data.data)
       dealInfo.value.img = data.data
     },
     (err) => {
@@ -85,11 +84,11 @@ const handleRegist = () => {
   registDeal(
     dealInfo.value,
     ({ data }) => {
-      console.log(data.data)
       router.push({ name: 'deal-map' })
     },
     (err) => {
       console.log(err)
+      alert('서버와의 접속이 원활하지 않습니다.\n잠시 후 다시 시도해주세요.')
     }
   )
 }
