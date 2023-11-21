@@ -45,7 +45,6 @@ const getImg = (img) => {
         <b>추천업종</b>
         <span>{{ info?.recommend }} </span>
         <br />
-        <hr />
         <b>상세 설명</b>
         <p>{{ info?.desc }}</p>
       </div>

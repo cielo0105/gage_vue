@@ -61,6 +61,10 @@ const initMap = () => {
       (err) => console.log(err)
     )
   })
+
+  window.kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+    isShow.value = false
+  })
 }
 
 //마커 생성
