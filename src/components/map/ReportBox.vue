@@ -1,7 +1,8 @@
 <script setup>
 import { changeMoney } from '@/util/changeMoney.js'
 import VAddress from '@/components/map/VAddress.vue'
-defineProps({ apt: Object })
+import ReportCard from '@/components/map/ReportCard.vue'
+const props = defineProps({ dong: String })
 </script>
 
 <template>
@@ -10,21 +11,26 @@ defineProps({ apt: Object })
       <button class="close-btn" @click="$emit('close-box')">✕</button>
     </div>
 
-    <div class="px-3 pb-3 border-bottom">
-      <h4 class="fw-bold">{{ apt?.apartmentName }}</h4>
+    <div class="px-3 pb-3">
+      <h4>
+        <span class="fw-bold">{{ props.dong }}</span> 상권 분석 보고서
+      </h4>
       <VAddress title="지번주소" :address="apt?.address" />
       <VAddress title="도로명주소" :address="apt?.road_address" v-if="apt?.road_address" />
     </div>
 
     <div class="scroll-box">
-      <div class="p-3 border-bottom d-flex">
-        <div>
-          <p>최근 거래 금액</p>
-          <span class="money">{{ changeMoney(apt?.houseDealDto?.[0].dealAmount) }}</span>
-          <span class="area">({{ apt?.houseDealDto?.[0].area }}m<sup>2</sup> )</span>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="p-3 d-flex card area">선택 업종 업소 수</div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3 d-flex card area">가장 많은 연령대</div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3 d-flex card area">연간 순수익</div>
         </div>
       </div>
-
       <div class="p-3">
         <p>거래내역</p>
         <table id="table-history" class="table table-hover">
@@ -57,7 +63,8 @@ defineProps({ apt: Object })
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
-  width: 25rem;
+  /* width: 26.5rem; */
+  height: 50rem;
   padding: 1rem;
   left: 2rem;
   top: 2rem;
@@ -88,9 +95,6 @@ defineProps({ apt: Object })
   outline: none;
 }
 
-.scroll-box {
-}
-
 .money {
   color: #000;
   font-size: 1.25rem;
@@ -102,5 +106,14 @@ defineProps({ apt: Object })
   color: #343a40;
   font-size: 0.75rem;
   font-weight: 400;
+}
+
+.card {
+  border-radius: 0.9375rem;
+  border: 3px solid var(--sub, #ffd600);
+
+  background: #fff;
+  width: 8rem;
+  height: 6.3125rem;
 }
 </style>
