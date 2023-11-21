@@ -6,14 +6,14 @@ export const getGageList = async (code) => {
   return gageList
 }
 
-export const getGageCountByCode = async (code, dong) => {
-  const res = await axios.get(`/gage/count?code=${code}&dong=${dong}`)
-  const gageCount = await res.data.data
-  return gageCount
-}
+// 동단위로 가게 개수 찾기 (+업종 코드로 찾기)
+export const getGageCount = async (dong, code = null) => {
+  let url = `/gage/count?dong=${dong}`
+  if (code !== null) {
+    url += `&code=${code}`
+  }
 
-export const getGageCount = async (dong) => {
-  const res = await axios.get(`/gage/cnt?dong=${dong}`)
-  const gageCount = await res.data.data
+  const res = await axios.get(url)
+  const gageCount = res.data.data
   return gageCount
 }

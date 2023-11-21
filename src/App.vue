@@ -21,9 +21,10 @@ import VHeader from '@/components/common/VHeader.vue'
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 79px;
-  height: 73px;
+  width: 120px;
+  height: 120px;
   background: url('./assets/marker.png') no-repeat;
+  background-size: contain;
   cursor: pointer;
 }
 
@@ -31,15 +32,14 @@ import VHeader from '@/components/common/VHeader.vue'
   position: relative;
   font-size: 18px;
   font-weight: 600;
-  color: white;
+  color: black;
   pointer-events: none;
 }
 
 .overlaybox .date {
   position: relative;
   font-size: 12px;
-  color: #bebebe;
+  color: #000000;
   pointer-events: none;
-  padding-bottom: 11px;
 }
 </style>

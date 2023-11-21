@@ -11,7 +11,7 @@ import { ref, onMounted } from 'vue'
 
 const mainList = ref([])
 const middleList = ref([{ text: '중분류', value: '' }]) // 중분류
-const subList = ref([{ test: '소분류', value: '' }]) // 소분류
+const subList = ref([{ text: '소분류', value: '' }]) // 소분류
 const result = ref([])
 const search = ref('')
 
@@ -36,7 +36,7 @@ const onChangeMain = async (val) => {
   let options = []
   let lists = await getMiddleList(val)
   options.push({ text: '중분류', value: '' })
-  subList.value = { text: '소분류', value: '' }
+  subList.value = [{ text: '소분류', value: '' }]
   console.log('lists:', lists)
   lists.forEach((list) => {
     options.push({ text: list.indsMclsNm, value: list.indsMclsCd })

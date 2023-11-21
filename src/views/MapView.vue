@@ -1,17 +1,18 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import SearchBox from '@/components/map/SearchBox.vue'
 import ReportBox from '@/components/map/ReportBox.vue'
 import MapFilterBox from '../components/map/MapFilterBox.vue'
 import { changeMoney } from '@/util/changeMoney.js'
-import { getGageList, getGageCount, getGageCountByCode } from '@/components/api/gageApi.js'
+import { getGageList, getGageCount } from '@/components/api/gageApi.js'
 import { getDongList } from '@/components/api/mapApi.js' // 지도 범위에 있는 동
+
 let map, geocoder
-let markers = []
+let markers = new Map()
 let isShow = ref(false)
 
-const dongSet = new Set()
 const reportDong = ref('') // 보고서 확인할 동
+const category = ref('') // 검색할 업종 코드
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -39,7 +40,7 @@ const initMap = () => {
     let lat = p.coords.latitude
     let lng = p.coords.longitude
     map.setCenter(new window.kakao.maps.LatLng(lat, lng))
-    map.setMaxLevel(4) // 지도 축소 제한
+    map.setMaxLevel(5) // 지도 축소 제한
   })
 
   window.kakao.maps.event.addListener(map, 'tilesloaded', () => getAddr())
@@ -73,12 +74,15 @@ const getDong = async (bx, by, tx, ty) => {
   const dongList = await getDongList(bx, by, tx, ty)
 
   for (let dong of dongList) {
-    if (!dongSet.has(dong)) {
-      dongSet.add(dong)
-
-      createMarker(dong)
-    }
+    if (!markers.has(dong.code)) createMarker(dong)
   }
+  // 현재 화면에 없는 동의 마커 삭제하기
+  // for (let code of dongMap.keys()) {
+  //   if (!searchMap.has(code)) {
+  //     dongMap.delete(code)
+  //   }
+  // }
+  // deleteMarker()
 }
 
 const getCount = async (dong) => {
@@ -118,11 +122,8 @@ const createMarker = async (data) => {
   })
 
   customOverlay.setMap(map)
-  markers.push(customOverlay)
-  let marker = new window.kakao.maps.Marker({
-    position: position
-  })
-  markers.push(marker)
+
+  markers.set(data.code, customOverlay)
 }
 
 const showDetail = (lat, lng, dong) => {
@@ -144,7 +145,6 @@ const showDetail = (lat, lng, dong) => {
 <template>
   <div id="map">
     <SearchBox v-model="category" />
-    <!-- <ReportBox :apt="aptInfo" @close-box="isShow = false" /> -->
     <ReportBox :dong="reportDong" v-show="isShow" @close-box="isShow = false" />
     <MapFilterBox />
   </div>

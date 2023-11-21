@@ -11,7 +11,7 @@ const props = defineProps({ dong: String })
       <button class="close-btn" @click="$emit('close-box')">✕</button>
     </div>
 
-    <div class="px-3 pb-3 border-bottom">
+    <div class="px-3 pb-3">
       <h4>
         <span class="fw-bold">{{ props.dong }}</span> 상권 분석 보고서
       </h4>
@@ -63,7 +63,7 @@ const props = defineProps({ dong: String })
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
-  width: 26.5rem;
+  /* width: 26.5rem; */
   height: 50rem;
   padding: 1rem;
   left: 2rem;
