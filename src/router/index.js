@@ -72,12 +72,17 @@ const router = createRouter({
           path: 'regist',
           name: 'deal-regist',
           component: () => import('@/components/deal/DealRegist.vue')
+        },
+        {
+          path: 'chat',
+          name: 'deal-chat',
+          component: () => import('@/components/deal/DealChat.vue')
         }
       ]
     }
   ],
-  linkActiveClass: "route-active",
-  linkExactActiveClass: "route-active"
+  linkActiveClass: 'route-active',
+  linkExactActiveClass: 'route-active'
 })
 
 export default router

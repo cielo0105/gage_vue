@@ -70,15 +70,15 @@ const createMarker = (data) => {
   content.onclick = () => {
     dealInfo.value = data
     isShow.value = true
+    map.setLevel(2)
     map.setCenter(new window.kakao.maps.LatLng(data.lat, data.lon))
-    map.setLevel(1)
   }
 
   content.innerHTML = `
 	  <input type="hidden" name="clickLat" value=${data.lat}>
 	  <input type="hidden" name="clickLng" value=${data.lon}>
     <div class="type">${changeType(data.type)}</div>
-	  <div class="price">${data.amount1}</div>
+	  <div class="price">${changeMoney(data.amount1)}</div>
     `
 
   let position = new window.kakao.maps.LatLng(data.lat, data.lon)

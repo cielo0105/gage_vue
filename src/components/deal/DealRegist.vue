@@ -110,26 +110,30 @@ const handleRegist = () => {
           :selected="dealInfo.type"
           @selectType="(e) => (dealInfo.type = e)"
         />
-        <deal-input
-          v-if="dealInfo.type === 'sale'"
-          v-model="dealInfo.amount1"
-          label="매매가"
-          width="30rem"
-          height="2.5rem"
-          type="text"
-          placeholder="매매가를 입력해주세요"
-          style="margin-bottom: 3rem"
-        />
-        <deal-input
-          v-if="dealInfo.type === 'lease'"
-          v-model="dealInfo.amount1"
-          label="보증금"
-          width="30rem"
-          height="2.5rem"
-          type="text"
-          placeholder="보증금을 입력해주세요"
-          style="margin-bottom: 3rem"
-        />
+        <div style="margin-bottom: 3rem" v-if="dealInfo.type === 'sale'">
+          <deal-input
+            v-model="dealInfo.amount1"
+            label="매매가"
+            width="25rem"
+            height="2.5rem"
+            type="number"
+            placeholder="매매가를 입력해주세요"
+            style="margin-right: 1rem"
+          />
+          <span style="width: 4rem; display: inline-block; text-align: center">만원</span>
+        </div>
+        <div style="margin-bottom: 3rem" v-if="dealInfo.type === 'lease'">
+          <deal-input
+            v-model="dealInfo.amount1"
+            label="보증금"
+            width="25rem"
+            height="2.5rem"
+            type="number"
+            placeholder="보증금을 입력해주세요"
+            style="margin-right: 1rem"
+          />
+          <span style="width: 4rem; display: inline-block; text-align: center">만원</span>
+        </div>
         <div style="margin-bottom: 3rem" v-if="dealInfo.type === 'monthly'">
           <deal-input
             v-model="dealInfo.amount1"
@@ -138,12 +142,14 @@ const handleRegist = () => {
             height="2.5rem"
             type="text"
             placeholder="보증금"
-            style="margin-right: 1rem"
           />
+          <span style="width: 2rem; margin: 1rem; display: inline-block; text-align: center"
+            >만원</span
+          >
           <deal-input
             v-model="dealInfo.amount2"
             label="월세"
-            width="11.5rem"
+            width="7rem"
             height="2.5rem"
             type="text"
             placeholder="월세"
@@ -182,7 +188,7 @@ const handleRegist = () => {
           label="전용 면적"
           width="30rem"
           height="2.5rem"
-          type="text"
+          type="number"
           placeholder="전용 면적을 입력해주세요"
           style="margin-bottom: 3rem"
         />
@@ -201,7 +207,7 @@ const handleRegist = () => {
             label="층수"
             width="11.5rem"
             height="2.5rem"
-            type="text"
+            type="number"
             placeholder="층수"
             style="margin-right: 1rem"
           />
@@ -210,7 +216,7 @@ const handleRegist = () => {
             label="총 층수"
             width="11.5rem"
             height="2.5rem"
-            type="text"
+            type="number"
             placeholder="총 층수"
           />
         </div>

@@ -13,8 +13,14 @@ import { RouterLink } from 'vue-router'
       </router-link>
       <router-link to="/deal/regist">
         <div>
-          <img src="../assets/pencil_icon.png" alt="pencil" width="50" height="50" />
+          <img src="../assets/registIcon.png" alt="regist" width="50" height="50" />
           <!-- <p>등록</p> -->
+        </div>
+      </router-link>
+      <router-link to="/deal/chat">
+        <div>
+          <img src="../assets/chatIcon.png" alt="chat" width="50" height="50" />
+          <!-- <p>채팅</p> -->
         </div>
       </router-link>
     </nav>
