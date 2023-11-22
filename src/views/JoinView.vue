@@ -59,9 +59,9 @@ const submitForm = () => {
 <template>
   <v-auth-layout title="회원가입" btnName="가입하기">
     <template #sub> 간단한 정보를 입력하고, 더욱 편리하게 사이트를 사용해보세요. </template>
-    <template #social>
+    <!-- <template #social>
       <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Kakao" />
-    </template>
+    </template> -->
     <template #form>
       <form @submit.prevent="submitForm" class="join-form">
         <input-box
