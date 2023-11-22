@@ -1,5 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { HomeView, JoinView, LoginView, MapView, NoticeView, ReportView, DealView } from '@/views'
+import {
+  HomeView,
+  JoinView,
+  LoginView,
+  MapView,
+  NoticeView,
+  ReportView,
+  DealView,
+  PolicyView,
+  SupportView
+} from '@/views'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +38,6 @@ const router = createRouter({
       path: '/notice',
       name: 'notice',
       component: NoticeView,
-      redirect: { name: 'notice-list' },
       children: [
         {
           path: 'list',
@@ -52,6 +61,17 @@ const router = createRouter({
         }
       ]
     },
+    {
+      path: '/policy',
+      name: 'policy',
+      component: PolicyView
+    },
+    {
+      path: '/support',
+      name: 'support',
+      component: SupportView
+    },
+
     {
       path: '/report',
       name: 'report',

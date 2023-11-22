@@ -1,18 +1,18 @@
 <script setup>
 import NoticeCard from '../components/notice/NoticeCard.vue'
-import { getNewsList } from '@/components/api/crawlingApi.js'
+import { getPolicyList } from '@/components/api/crawlingApi.js'
 import { ref, onMounted } from 'vue'
 import InfoHeader from '@/components/notice/InfoHeader.vue'
-const newsList = ref([])
+const policyList = ref([])
 onMounted(async () => {
-  newsList.value = await getNewsList()
+  policyList.value = await getPolicyList()
 })
 </script>
 
 <template>
   <InfoHeader />
   <div class="container mt-3">
-    <NoticeCard v-for="news in newsList" :key="news.title" :title="news.title" :url="news.url" />
+    <NoticeCard v-for="news in policyList" :key="news.title" :title="news.title" :url="news.url" />
   </div>
 </template>
 <style scoped></style>
