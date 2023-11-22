@@ -17,7 +17,7 @@ import { RouterLink } from 'vue-router'
           <!-- <p>등록</p> -->
         </div>
       </router-link>
-      <router-link to="/deal/chat">
+      <router-link :to="{ name: 'deal-chat', params: { id: 0 } }">
         <div>
           <img src="../assets/chatIcon.png" alt="chat" width="50" height="50" />
           <!-- <p>채팅</p> -->

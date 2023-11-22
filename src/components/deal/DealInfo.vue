@@ -1,7 +1,9 @@
 <script setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import VAddress from '@/components/map/VAddress.vue'
 import { changeMoney } from '@/util/changeMoney.js'
+const router = useRouter()
 const prop = defineProps({
   info: Object
 })
@@ -50,7 +52,9 @@ const getImg = (img) => {
       </div>
     </div>
     <div class="footer">
-      <button class="chat-btn">채팅하기</button>
+      <button class="chat-btn" @click="() => router.push({ path: `/deal/chat/${info?.id}` })">
+        채팅하기
+      </button>
     </div>
   </div>
 </template>
