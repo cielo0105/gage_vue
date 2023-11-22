@@ -1,8 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
 import ChatInput from '@/components/deal/ChatInput.vue'
+
+const route = useRoute()
 
 const uid = ref('')
 const content = ref('')
@@ -23,7 +26,7 @@ const send = () => {
       userId: uid.value,
       content: content.value
     }
-    ws.send('/receive', JSON.stringify(msg), {})
+    ws.send(`/receive/${route.params.id}`, JSON.stringify(msg), {})
   }
 }
 
@@ -37,7 +40,7 @@ const connect = () => {
     (frame) => {
       window.connected = true
       console.log('소켓 연결 성공', frame)
-      ws.subscribe('/send', (res) => {
+      ws.subscribe(`/send/${route.params.id}`, (res) => {
         console.log('구독으로 받은 메시지 입니다.', JSON.parse(res.body).body.data)
         recvList.value.push(JSON.parse(res.body).body.data)
       })
