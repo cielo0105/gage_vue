@@ -1,12 +1,12 @@
 <script setup>
+import { onMounted } from 'vue'
 import { changeMoney } from '@/util/changeMoney.js'
 
 import VAddress from '@/components/map/VAddress.vue'
 import ReportCard from '@/components/map/ReportCard.vue'
-const props = defineProps(['reportDong'])
-// onMounted(() => {
-//   getLocalPeopleRank()
-// }),
+import BarChart from '@/components/chart/BarChart.vue'
+const props = defineProps(['reportDong', 'category', 'fullCategory'])
+// reportDong - code, dong, cnt, rank, top
 </script>
 
 <template>
@@ -21,9 +21,12 @@ const props = defineProps(['reportDong'])
       </h4>
       <!-- <VAddress title="지번주소" :address="apt?.address" />
       <VAddress title="도로명주소" :address="apt?.road_address" v-if="apt?.road_address" /> -->
-      <span class="category">category</span>
+      <span class="category"
+        >{{ fullCategory.indsLclsNm }}>{{ fullCategory.indsMclsNm }}>{{
+          fullCategory.indsSclsNm
+        }}</span
+      >
     </div>
-
     <div class="scroll-box">
       <div class="row">
         <div class="col-md-4">
@@ -47,6 +50,8 @@ const props = defineProps(['reportDong'])
       </div>
       <div class="p-3">
         <p>거래내역</p>
+        <!-- <DoughnutChart :reportDong="props.reportDong" /> -->
+        <BarChart />
       </div>
     </div>
   </div>

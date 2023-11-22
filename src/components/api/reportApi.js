@@ -5,3 +5,9 @@ export const getLocalPeopleRank = async (code) => {
   const peopleRank = await res.data.data
   return peopleRank
 }
+
+export const getGageRank = async (code, dong) => {
+  const res = await axios.get(`/report/gagerank?code=${code}&dong=${dong}`)
+  const gageRank = await res.data.data
+  return gageRank
+}
