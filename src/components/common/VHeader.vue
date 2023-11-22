@@ -13,6 +13,7 @@ const isAuth = computed(() => localStorage.getItem('jwtToken') !== null)
 
 const handleLogout = () => {
   localStorage.removeItem('jwtToken')
+  localStorage.removeItem('user')
   router.go()
 }
 </script>

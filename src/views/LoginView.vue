@@ -36,6 +36,7 @@ const submitForm = () => {
     ({ data }) => {
       console.log('로그인 성공!! data==', data)
       localStorage.setItem('jwtToken', data.data.accessToken)
+      localStorage.setItem('user', requestData.userId)
       router.go()
     },
     (err) => {

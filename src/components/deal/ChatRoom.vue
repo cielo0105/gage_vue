@@ -6,8 +6,6 @@ import SockJS from 'sockjs-client'
 import ChatInput from '@/components/deal/ChatInput.vue'
 
 const route = useRoute()
-
-const uid = ref('')
 const content = ref('')
 const recvList = ref([])
 let ws
@@ -23,7 +21,7 @@ const send = () => {
   console.log('Send message:' + content.value)
   if (ws && ws.connected) {
     const msg = {
-      userId: uid.value,
+      userId: localStorage.getItem('user'),
       content: content.value
     }
     ws.send(`/receive/${route.params.id}`, JSON.stringify(msg), {})
@@ -35,8 +33,12 @@ const connect = () => {
   let socket = new SockJS(serverURL)
   ws = Stomp.over(socket)
   console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
+
+  let headers = { Authorization: localStorage.getItem('jwtToken') }
+
+  let headers2 = { Authorization: '  ' }
   ws.connect(
-    {},
+    headers,
     (frame) => {
       window.connected = true
       console.log('소켓 연결 성공', frame)
