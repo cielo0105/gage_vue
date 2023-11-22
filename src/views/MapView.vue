@@ -18,7 +18,8 @@ const reportDong = ref({
   dong: '',
   cnt: 0,
   rank: [],
-  top: []
+  top: [],
+  gageRank: []
 })
 // 보고서 확인할 동
 const category = ref('') // 검색할 업종 코드
@@ -170,8 +171,8 @@ const showDetail = async (lat, lng, dong, code, cnt) => {
       const rank = await getLocalPeopleRank(code)
       // console.log('full', fullCategory.value.indsLclsNm)
       const gageRank = await getGageRank(fullCategory.value.indsLclsCd, code)
-      console.log('랭킹', gageRank)
-
+      // console.log('랭킹', gageRank)
+      reportDong.value.gageRank = gageRank
       reportDong.value.rank = rank
       reportDong.value.top = [] // 초기화
       for (let r in rank) {

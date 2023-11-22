@@ -39,7 +39,7 @@ const props = defineProps(['reportDong', 'category', 'fullCategory'])
           <div class="p-3 d-flex card area">
             가장 많은 연령대
 
-            <span class="fw-bold">{{ props.reportDong.top[1] }}</span>
+            <span class="fw-bold">{{ props.reportDong.top[0] }}</span>
           </div>
 
           <!-- <p>{{ reportDong.rank[1].top1 }}</p> -->
@@ -49,9 +49,20 @@ const props = defineProps(['reportDong', 'category', 'fullCategory'])
         </div>
       </div>
       <div class="p-3">
-        <p>거래내역</p>
+        <p>유사 업종</p>
+        <table class="table">
+          <tbody>
+            <tr v-for="(gage, index) in reportDong.gageRank" :key="index">
+              <th scope="row">{{ index + 1 }}</th>
+              <td>{{ gage.indsSclsNm }}</td>
+              <td>{{ gage.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>연령대</p>
         <!-- <DoughnutChart :reportDong="props.reportDong" /> -->
-        <BarChart />
+        <BarChart :reportDong="reportDong" />
       </div>
     </div>
   </div>
