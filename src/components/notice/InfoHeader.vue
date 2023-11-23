@@ -31,7 +31,7 @@ a {
   font-size: 1rem;
   font-weight: 700;
 }
-a.router-link-active {
+a.route-active {
   color: #5acc00;
 }
 </style>

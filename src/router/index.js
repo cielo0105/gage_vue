@@ -49,11 +49,6 @@ const router = createRouter({
           path: 'support',
           name: 'support',
           component: () => import('@/components/notice/SupportList.vue')
-        },
-        {
-          path: 'modify/:articleno',
-          name: 'notice-modify',
-          component: () => import('@/components/notice/NoticeModify.vue')
         }
       ]
     },
@@ -85,11 +80,11 @@ const router = createRouter({
           component: () => import('@/components/deal/DealChat.vue')
         }
       ],
-      linkActiveClass: 'route-active',
+      linkActiveClass: 'route-active'
     }
   ],
   linkActiveClass: 'route-active',
-  linkExactActiveClass: "route-active",
+  linkExactActiveClass: 'route-active'
 })
 
 router.beforeEach((to, from, next) => {
