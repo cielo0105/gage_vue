@@ -5,7 +5,6 @@ const emit = defineEmits(['onKeySelect'])
 const key = ref('')
 
 const onSelect = () => {
-  console.log('dropdown-selected: ', key.value)
   emit('onKeySelect', key.value)
 }
 </script>

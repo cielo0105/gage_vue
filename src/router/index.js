@@ -28,25 +28,36 @@ const router = createRouter({
       path: '/notice',
       name: 'notice',
       component: NoticeView,
-      redirect: { name: 'notice-list' },
+      redirect: { name: 'news' },
       children: [
         {
-          path: 'list',
-          name: 'notice-list',
-          component: () => import('@/components/notice/NoticeList.vue')
+          path: 'news',
+          name: 'news',
+          component: () => import('@/components/notice/NewsList.vue')
         },
         {
-          path: 'view/:articleno',
-          name: 'notice-view',
-          component: () => import('@/components/notice/NoticeDetail.vue')
+          path: 'info',
+          name: 'info',
+          component: () => import('@/components/notice/InfoList.vue')
         },
         {
           path: 'write',
           name: 'notice-write',
           component: () => import('@/components/notice/NoticeWrite.vue')
+        },
+        {
+          path: 'support',
+          name: 'support',
+          component: () => import('@/components/notice/SupportList.vue')
+        },
+        {
+          path: 'modify/:articleno',
+          name: 'notice-modify',
+          component: () => import('@/components/notice/NoticeModify.vue')
         }
       ]
     },
+
     {
       path: '/report',
       name: 'report',
