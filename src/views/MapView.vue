@@ -11,7 +11,7 @@ import { getLocalPeopleRank, getGageRank, getIndicator } from '@/components/api/
 let map, geocoder
 let markers = new Map()
 let isShow = ref(false)
-
+const marks = []
 const reportDong = ref({
   code: '',
   dong: '',
@@ -81,24 +81,18 @@ const getAddr = (type) => {
   let mapBottomLng = map.getBounds().getSouthWest().getLng()
   let mapTopLat = map.getBounds().getNorthEast().getLat()
   let mapTopLng = map.getBounds().getNorthEast().getLng()
-  // console.log(type)
-  // console.log(mapBottomLat, mapBottomLng, mapTopLat, mapTopLng)
+
   if (type === 1) getNewMarker(mapBottomLat, mapBottomLng, mapTopLat, mapTopLng)
   else getDong(mapBottomLat, mapBottomLng, mapTopLat, mapTopLng) // 지도 범위에 있는 동 구하기
-  // var sw = new window.kakao.maps.LatLng(36, 127)
-  // console.log(mapRange.contain(sw))
-
-  // geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), (e) => {
-  //   console.log('e', e)
-  //   markers.map((m) => m.setMap(null))
-  //   console.log('dong위치=========', e[0].code)
-  //   getGage(e[0].code)
-  // })
 }
 
 const getNewMarker = async (bx, by, tx, ty) => {
   const dongList = await getDongList(bx, by, tx, ty)
 
+  // 마커 초기화
+  for (let mark of marks) {
+    mark.setMap(null)
+  }
   for (let dong of dongList) {
     createMarker(dong)
   }
@@ -159,6 +153,7 @@ const createMarker = async (data) => {
   customOverlay.setMap(map)
 
   markers.set(data.code, customOverlay)
+  marks.push(customOverlay)
 }
 
 const showDetail = async (lat, lng, dong, code, cnt) => {
