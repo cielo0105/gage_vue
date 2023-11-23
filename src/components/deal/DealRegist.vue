@@ -95,7 +95,7 @@ const handleRegist = () => {
 </script>
 
 <template>
-  <div style="width: 100%">
+  <div style="width: 100%; background-color: white">
     <div class="post-box" v-if="postOpen" @click="() => (postOpen = false)">
       <div class="post-container" @click.stop="">
         <VueDaumPostcode @complete="onComplete" class="postcode" />

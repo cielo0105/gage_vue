@@ -24,7 +24,14 @@ const getImg = (img) => {
 </script>
 
 <template>
-  <div style="display: flex; flex-direction: column">
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.25) inset;
+      border: 1px solid #ececec;
+    "
+  >
     <div class="dealinfo-box">
       <header class="header">
         <strong class="title">{{ dealType }}</strong>
@@ -62,8 +69,8 @@ const getImg = (img) => {
 <style scoped>
 .dealinfo-box {
   width: 30rem;
-  height: 88%;
-  background: #fff;
+  height: 90%;
+  background-color: white;
 }
 .dealinfo-box .header {
   display: flex;
@@ -97,12 +104,13 @@ b {
 }
 
 .footer {
-  border-top: 2px solid #eee;
-  height: 12%;
+  height: 10%;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: white;
+  border-top: 1px solid #ececec;
 }
 
 .chat-btn {

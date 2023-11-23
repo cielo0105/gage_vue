@@ -1,14 +1,40 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { getList } from '@/components/api/chatApi.js'
+const router = useRouter()
+const chatList = ref()
+
+onMounted(() => {
+  const user = {
+    userId: localStorage.getItem('user')
+  }
+
+  getList(
+    user,
+    ({ data }) => {
+      console.log(data.data)
+      chatList.value = data.data
+    },
+    (err) => console.log(err)
+  )
+})
+</script>
 
 <template>
   <div class="chat-list">
     <!-- <b>대화 목록</b> -->
-    <div class="comp" v-for="n in 10" :key="n" :id="n">
+    <div
+      class="comp"
+      v-for="(item, index) in chatList"
+      :key="index"
+      @click="() => router.push(`/deal/chat/${item.id}`)"
+    >
       <header class="chat-header">
-        <h5>최지우</h5>
-        <span>11:23</span>
+        <h5>{{ item.name1 }}, {{ item.name2 }}</h5>
+        <span>{{ item.lastSend }}</span>
       </header>
-      <span>아직 거래되지 않았습니다. 매물 궁금하시면 010-0123-1234로 연락 남겨주세요.</span>
+      <span>{{ item.lastMsg }}</span>
     </div>
   </div>
 </template>
@@ -17,7 +43,10 @@
 .chat-list {
   width: 26%;
   height: calc(100vh - 81.24px);
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
+  padding: 1rem 0;
+  border-top: 1px solid #ececec;
+  background-color: white;
 }
 .chat-list b {
   display: block;
@@ -28,6 +57,7 @@
 .chat-list .comp {
   border-bottom: 1px solid #ececec;
   padding: 1rem 2rem;
+  cursor: pointer;
 }
 
 .chat-header {

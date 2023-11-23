@@ -30,6 +30,7 @@ import { RouterLink } from 'vue-router'
 <style scoped>
 .deal-layout {
   display: flex;
+  background-color: #ececec;
 }
 .map-nav {
   display: flex;

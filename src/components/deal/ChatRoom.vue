@@ -1,16 +1,43 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
 import ChatInput from '@/components/deal/ChatInput.vue'
+import DealInfo from '@/components/deal/DealInfo.vue'
+import { getMessages } from '@/components/api/chatApi.js'
 
 const route = useRoute()
 const content = ref('')
 const recvList = ref([])
+const user = localStorage.getItem('user')
 let ws
 
-onMounted(() => connect())
+watch(
+  () => route.params.id,
+  (to, from) => {
+    recvList.value = []
+    ws.disconnect()
+    connect()
+    receiveMessages(route.params.id)
+  }
+)
+
+onMounted(() => {
+  connect()
+  receiveMessages(route.params.id)
+})
+
+const receiveMessages = (id) => {
+  getMessages(
+    id,
+    ({ data }) => {
+      console.log('gg')
+      recvList.value = data.data
+    },
+    (err) => console.log(err)
+  )
+}
 
 const sendMessage = () => {
   send()
@@ -36,7 +63,6 @@ const connect = () => {
 
   let headers = { Authorization: localStorage.getItem('jwtToken') }
 
-  let headers2 = { Authorization: '  ' }
   ws.connect(
     headers,
     (frame) => {
@@ -56,9 +82,35 @@ const connect = () => {
 </script>
 
 <template>
+  <DealInfo />
   <div class="chat-view-box">
     <div class="chat-view">
-      <div v-for="(item, index) in recvList" :key="index">{{ item.content }}</div>
+      <div
+        v-for="(item, index) in recvList"
+        :key="index"
+        class="msg"
+        :class="item.user === user ? 'right-user' : 'left-user'"
+      >
+        <div
+          v-if="index === 0 || recvList[index - 1].user !== recvList[index].user"
+          class="msg-name"
+        >
+          {{ item.name }}
+        </div>
+        <div class="msg-bottom" :class="item.user === user ? 'right-user-msg' : 'left-user-msg'">
+          <div
+            class="msg-box"
+            :class="item.user === user ? 'right-user-msg-box' : 'left-user-msg-box'"
+          >
+            {{ item.content }}
+          </div>
+          <span class="msg-date"
+            >{{ ('00' + new Date(item.createDate).getHours()).slice(-2) }}:{{
+              ('00' + new Date(item.createDate).getMinutes()).slice(-2)
+            }}</span
+          >
+        </div>
+      </div>
     </div>
     <ChatInput @send="sendMessage" v-model="content" />
   </div>
@@ -68,10 +120,55 @@ const connect = () => {
 .chat-view-box {
   height: calc(100vh - 81.24px);
   width: calc(100% - 50px - 2.6rem - 26%);
+  background-color: #ececec;
 }
 .chat-view {
   height: 93%;
   width: 100%;
-  background-color: #ececec;
+  padding: 2rem;
+  overflow-y: scroll;
+}
+.msg {
+  display: flex;
+  flex-direction: column;
+}
+.right-user {
+  align-items: flex-end;
+}
+
+.right-user-msg {
+  flex-direction: row-reverse;
+}
+.msg-name {
+  font-weight: 500;
+}
+
+.msg-bottom {
+  display: flex;
+  align-items: flex-end;
+}
+
+.msg-box {
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 20px;
+  background-color: #363636;
+  color: white;
+  margin: 0.4rem 0;
+  padding: 0.5rem 1rem;
+}
+
+.right-user-msg-box {
+  background-color: #5acc00;
+}
+
+.left-user-msg-box {
+  color: black;
+  background-color: #ffd600;
+}
+
+.msg-date {
+  padding: 0.5rem 0.3rem;
+  color: #9c9c9c;
 }
 </style>

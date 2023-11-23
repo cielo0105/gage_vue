@@ -69,7 +69,7 @@ const router = createRouter({
           component: () => import('@/components/deal/DealRegist.vue')
         },
         {
-          path: 'chat',
+          path: 'chat/:id',
           name: 'deal-chat',
           component: () => import('@/components/deal/DealChat.vue'),
           children: [
