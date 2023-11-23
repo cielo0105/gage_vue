@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 // import LogoIcon from '@/components/icons/LogoIcon.vue'
 
@@ -6,6 +7,14 @@ const router = useRouter()
 
 const goHome = () => {
   router.push('/')
+}
+
+const isAuth = computed(() => localStorage.getItem('jwtToken') !== null)
+
+const handleLogout = () => {
+  localStorage.removeItem('jwtToken')
+  localStorage.removeItem('user')
+  router.go()
 }
 </script>
 
@@ -17,7 +26,10 @@ const goHome = () => {
       <router-link to="/map">지도</router-link>
       <router-link to="/deal">거래</router-link>
       <router-link to="/notice">공지사항</router-link>
-      <router-link to="/login" class="login-btn">로그인 / 회원가입</router-link>
+      <template v-if="isAuth">
+        <a class="login-btn" @click="handleLogout">로그아웃</a>
+      </template>
+      <router-link to="/login" class="login-btn" v-else="isAuth">로그인 / 회원가입</router-link>
     </nav>
   </header>
 </template>
@@ -53,5 +65,6 @@ a {
   text-decoration: none;
   font-size: 1rem;
   font-weight: 700;
+  cursor: pointer;
 }
 </style>

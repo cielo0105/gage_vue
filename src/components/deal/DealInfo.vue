@@ -1,9 +1,13 @@
 <script setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import VAddress from '@/components/map/VAddress.vue'
 import { changeMoney } from '@/util/changeMoney.js'
+import { createChat } from '@/components/api/chatApi'
+const router = useRouter()
 const prop = defineProps({
-  info: Object
+  info: Object,
+  isMap: Boolean
 })
 
 const dealType = computed(() => {
@@ -16,17 +20,40 @@ const dealType = computed(() => {
   }
 })
 
-const getImg = (img) => {
-  return new URL(img, import.meta.url).href
+const handleChat = () => {
+  const requestData = {
+    user: localStorage.getItem('user'),
+    deal: prop.info.id
+  }
+
+  createChat(
+    requestData,
+    ({ data }) => {
+      console.log(data.data)
+
+      router.push({ path: `/deal/chat/${data.data}` })
+    },
+    (err) => {
+      console.log(err)
+      alert('서버와의 연결이 원활하지 않습니다.\n 잠시후 다시 시도해주세요.')
+    }
+  )
 }
 </script>
 
 <template>
-  <div style="display: flex; flex-direction: column">
-    <div class="dealinfo-box">
+  <div
+    style="
+      display: flex;
+      flex-direction: column;
+      box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.25) inset;
+      border: 1px solid #ececec;
+    "
+  >
+    <div class="dealinfo-box" :class="{ 'dealinfo-box-height': !isMap }">
       <header class="header">
         <strong class="title">{{ dealType }}</strong>
-        <button class="close-btn" @click="$emit('close-box')">✕</button>
+        <button class="close-btn" @click="$emit('close-box')" v-show="isMap">✕</button>
       </header>
       <VAddress
         title="주소"
@@ -35,7 +62,6 @@ const getImg = (img) => {
       />
       <hr />
       <div class="content">
-        <!-- <img :src="getImg(info?.img)" alt="img" v-if="info?.img" class="info-img" /> -->
         <b>전용 면적</b>
         <span>{{ info?.area }} ㎡ </span>
         <br />
@@ -45,13 +71,12 @@ const getImg = (img) => {
         <b>추천업종</b>
         <span>{{ info?.recommend }} </span>
         <br />
-        <hr />
         <b>상세 설명</b>
         <p>{{ info?.desc }}</p>
       </div>
     </div>
-    <div class="footer">
-      <button class="chat-btn">채팅하기</button>
+    <div class="footer" v-show="isMap">
+      <button class="chat-btn" @click="handleChat">채팅하기</button>
     </div>
   </div>
 </template>
@@ -59,8 +84,12 @@ const getImg = (img) => {
 <style scoped>
 .dealinfo-box {
   width: 30rem;
-  height: 88%;
-  background: #fff;
+  height: 90%;
+  background-color: white;
+}
+
+.dealinfo-box-height {
+  height: 100%;
 }
 .dealinfo-box .header {
   display: flex;
@@ -94,12 +123,13 @@ b {
 }
 
 .footer {
-  border-top: 2px solid #eee;
-  height: 12%;
+  height: 10%;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: white;
+  border-top: 1px solid #ececec;
 }
 
 .chat-btn {

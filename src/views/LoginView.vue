@@ -35,10 +35,15 @@ const submitForm = () => {
     requestData,
     ({ data }) => {
       console.log('로그인 성공!! data==', data)
-      router.push({ name: 'home' })
+      localStorage.setItem('jwtToken', data.data.accessToken)
+      localStorage.setItem('user', requestData.userId)
+      router.go()
     },
     (err) => {
       console.log('로그인 실패ㅜㅜ', err.response.data.msg)
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.')
+      userid.value = ''
+      userpass.value = ''
     }
   )
 }
@@ -50,9 +55,9 @@ const submitForm = () => {
       어서오세요! 아직 저희 사이트의 회원이 아니시면 <br />
       <router-link to="/join" class="join">회원가입</router-link>을 먼저 진행해주세요!
     </template>
-    <template #social>
+    <!-- <template #social>
       <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Kakao" />
-    </template>
+    </template> -->
     <template #form>
       <form v-on:submit.prevent="submitForm" class="login-form">
         <InputBox
@@ -83,7 +88,8 @@ const submitForm = () => {
   align-items: center;
 }
 .join {
-  color: #0030ab;
+  color: black;
+  font-weight: 700;
 }
 .err-msg {
   color: #cd00a0;

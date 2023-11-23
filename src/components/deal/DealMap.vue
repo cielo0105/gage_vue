@@ -61,6 +61,10 @@ const initMap = () => {
       (err) => console.log(err)
     )
   })
+
+  window.kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+    isShow.value = false
+  })
 }
 
 //마커 생성
@@ -70,7 +74,6 @@ const createMarker = (data) => {
   content.onclick = () => {
     dealInfo.value = data
     isShow.value = true
-    map.setLevel(2)
     map.setCenter(new window.kakao.maps.LatLng(data.lat, data.lon))
   }
 
@@ -93,7 +96,12 @@ const createMarker = (data) => {
 </script>
 
 <template>
-  <deal-info :info="dealInfo" v-if="isShow" @close-box="() => (isShow = false)"></deal-info>
+  <deal-info
+    :info="dealInfo"
+    v-if="isShow"
+    @close-box="() => (isShow = false)"
+    isMap="true"
+  ></deal-info>
   <div id="map"></div>
 </template>
 

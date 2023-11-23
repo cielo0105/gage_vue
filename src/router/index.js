@@ -41,6 +41,11 @@ const router = createRouter({
           component: () => import('@/components/notice/InfoList.vue')
         },
         {
+          path: 'write',
+          name: 'notice-write',
+          component: () => import('@/components/notice/NoticeWrite.vue')
+        },
+        {
           path: 'support',
           name: 'support',
           component: () => import('@/components/notice/SupportList.vue')
@@ -75,15 +80,35 @@ const router = createRouter({
           component: () => import('@/components/deal/DealRegist.vue')
         },
         {
-          path: 'chat',
+          path: 'chat/:id',
           name: 'deal-chat',
           component: () => import('@/components/deal/DealChat.vue')
         }
-      ]
+      ],
+      linkActiveClass: 'route-active',
     }
   ],
   linkActiveClass: 'route-active',
-  linkExactActiveClass: 'route-active'
+  linkExactActiveClass: "route-active",
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.fullPath === '/deal/chat') {
+    next('/deal/chat/0')
+  }
+  if (
+    (to.fullPath === `/deal/chat/${to.params.id}` ||
+      to.fullPath === `/deal/chat` ||
+      to.fullPath === `/deal/regist`) &&
+    !localStorage.getItem('jwtToken')
+  ) {
+    alert('로그인이 필요한 서비스입니다.')
+    next('/login')
+  } else if (to.fullPath === `/login` && localStorage.getItem('jwtToken')) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router
