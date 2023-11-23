@@ -1,6 +1,5 @@
 <script setup>
 const props = defineProps({ title: String, url: String })
-
 const move = () => {
   window.location.href = props.url
 }
@@ -8,8 +7,8 @@ const move = () => {
 
 <template>
   <div class="card" @click="move()">
-    <p class="text">{{ title }}</p>
-    확인하러 가기 ➞
+    <p class="card-title">{{ title }}</p>
+    <span class="card-detail">자세히 보기 ➜</span>
   </div>
 </template>
 
@@ -18,27 +17,39 @@ const move = () => {
   width: 16.375rem;
   height: 20.0625rem;
   border-radius: 0.9375rem;
-  border: none;
-  display: inline-block;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  padding-top: 1rem;
-  margin: 1rem;
-}
-.card:hover {
-  background: #ffd600;
+  padding: 1rem;
+  margin: 1.2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none;
   cursor: pointer;
 }
 
-.text {
-  font-size: 1.25rem;
-  font-weight: 700;
-  display: block;
-  padding-left: 0.5rem;
-  padding-bottom: 0.5rem;
+.card:hover {
+  background: #ffd600;
 }
 
-a {
-  text-decoration: none;
+.card-title {
+  color: #353535;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.card-detail {
+  color: #000;
+  font-size: 1.25rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  border-radius: 30px;
+  text-align: right;
+}
+
+.card-detail:hover {
+  background-color: #ffd600;
 }
 </style>

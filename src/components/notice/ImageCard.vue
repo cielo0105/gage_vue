@@ -17,8 +17,7 @@ const move = () => {
 
 <style scoped>
 .card {
-  width: 16.375rem;
-  height: 20.0625rem;
+  height: 100%;
   border-radius: 0.9375rem;
   border: none;
   display: inline-block;
@@ -42,5 +41,14 @@ const move = () => {
 
 a {
   text-decoration: none;
+}
+
+img {
+  width: 100%;
+  height: 22rem;
+  object-fit: contain;
+}
+.card-body {
+  height: 6rem;
 }
 </style>
