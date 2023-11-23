@@ -1,23 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { getList } from '@/components/api/chatApi.js'
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
-const chatList = ref()
-
-onMounted(() => {
-  const user = {
-    userId: localStorage.getItem('user')
-  }
-
-  getList(
-    user,
-    ({ data }) => {
-      console.log(data.data)
-      chatList.value = data.data
-    },
-    (err) => console.log(err)
-  )
+const route = useRoute()
+defineProps({
+  chatList: Array
 })
 </script>
 
@@ -25,8 +11,9 @@ onMounted(() => {
   <div class="chat-list">
     <!-- <b>대화 목록</b> -->
     <div
-      class="comp"
       v-for="(item, index) in chatList"
+      class="comp"
+      :class="route.params.id == item.id ? 'selected' : ''"
       :key="index"
       @click="() => router.push(`/deal/chat/${item.id}`)"
     >
@@ -58,6 +45,10 @@ onMounted(() => {
   border-bottom: 1px solid #ececec;
   padding: 1rem 2rem;
   cursor: pointer;
+}
+
+.chat-list .selected {
+  background: #ffd600;
 }
 
 .chat-header {

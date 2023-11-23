@@ -5,7 +5,8 @@ import VAddress from '@/components/map/VAddress.vue'
 import { changeMoney } from '@/util/changeMoney.js'
 const router = useRouter()
 const prop = defineProps({
-  info: Object
+  info: Object,
+  isShow: Boolean
 })
 
 const dealType = computed(() => {
@@ -32,10 +33,10 @@ const getImg = (img) => {
       border: 1px solid #ececec;
     "
   >
-    <div class="dealinfo-box">
+    <div class="dealinfo-box" :class="{ 'dealinfo-box-height': !isShow }">
       <header class="header">
         <strong class="title">{{ dealType }}</strong>
-        <button class="close-btn" @click="$emit('close-box')">✕</button>
+        <button class="close-btn" @click="$emit('close-box')" v-show="isShow">✕</button>
       </header>
       <VAddress
         title="주소"
@@ -58,7 +59,7 @@ const getImg = (img) => {
         <p>{{ info?.desc }}</p>
       </div>
     </div>
-    <div class="footer">
+    <div class="footer" v-show="isShow">
       <button class="chat-btn" @click="() => router.push({ path: `/deal/chat/${info?.id}` })">
         채팅하기
       </button>
@@ -71,6 +72,10 @@ const getImg = (img) => {
   width: 30rem;
   height: 90%;
   background-color: white;
+}
+
+.dealinfo-box-height {
+  height: 100%;
 }
 .dealinfo-box .header {
   display: flex;

@@ -71,23 +71,20 @@ const router = createRouter({
         {
           path: 'chat/:id',
           name: 'deal-chat',
-          component: () => import('@/components/deal/DealChat.vue'),
-          children: [
-            {
-              path: ':id',
-              name: 'chat-room',
-              component: () => import('@/components/deal/ChatRoom.vue')
-            }
-          ]
+          component: () => import('@/components/deal/DealChat.vue')
         }
-      ]
+      ],
+      linkActiveClass: 'route-active',
     }
   ],
   linkActiveClass: 'route-active',
-  linkExactActiveClass: 'route-active'
+  linkExactActiveClass: "route-active",
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.fullPath === '/deal/chat') {
+    next('/deal/chat/0')
+  }
   if (
     (to.fullPath === `/deal/chat/${to.params.id}` ||
       to.fullPath === `/deal/chat` ||

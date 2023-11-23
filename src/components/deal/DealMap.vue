@@ -74,7 +74,6 @@ const createMarker = (data) => {
   content.onclick = () => {
     dealInfo.value = data
     isShow.value = true
-    map.setLevel(2)
     map.setCenter(new window.kakao.maps.LatLng(data.lat, data.lon))
   }
 

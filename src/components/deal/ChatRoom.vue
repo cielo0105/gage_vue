@@ -1,88 +1,21 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import Stomp from 'webstomp-client'
-import SockJS from 'sockjs-client'
-import ChatInput from '@/components/deal/ChatInput.vue'
 import DealInfo from '@/components/deal/DealInfo.vue'
-import { getMessages } from '@/components/api/chatApi.js'
 
-const route = useRoute()
-const content = ref('')
-const recvList = ref([])
-const user = localStorage.getItem('user')
-let ws
-
-watch(
-  () => route.params.id,
-  (to, from) => {
-    recvList.value = []
-    ws.disconnect()
-    connect()
-    receiveMessages(route.params.id)
-  }
-)
-
-onMounted(() => {
-  connect()
-  receiveMessages(route.params.id)
+defineProps({
+  recvList: Array,
+  modelValue: String,
+  user: String,
+  info: Array
 })
 
-const receiveMessages = (id) => {
-  getMessages(
-    id,
-    ({ data }) => {
-      console.log('gg')
-      recvList.value = data.data
-    },
-    (err) => console.log(err)
-  )
-}
-
-const sendMessage = () => {
-  send()
-  content.value = ''
-}
-
-const send = () => {
-  console.log('Send message:' + content.value)
-  if (ws && ws.connected) {
-    const msg = {
-      userId: localStorage.getItem('user'),
-      content: content.value
-    }
-    ws.send(`/receive/${route.params.id}`, JSON.stringify(msg), {})
-  }
-}
-
-const connect = () => {
-  const serverURL = 'http://localhost:8080/chat'
-  let socket = new SockJS(serverURL)
-  ws = Stomp.over(socket)
-  console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
-
-  let headers = { Authorization: localStorage.getItem('jwtToken') }
-
-  ws.connect(
-    headers,
-    (frame) => {
-      window.connected = true
-      console.log('소켓 연결 성공', frame)
-      ws.subscribe(`/send/${route.params.id}`, (res) => {
-        console.log('구독으로 받은 메시지 입니다.', JSON.parse(res.body).body.data)
-        recvList.value.push(JSON.parse(res.body).body.data)
-      })
-    },
-    (error) => {
-      console.log('소켓 연결 실패', error)
-      window.connected = false
-    }
-  )
+const emit = defineEmits(['update:modelValue'])
+const handleInput = ($event) => {
+  emit('update:modelValue', $event.target.value)
 }
 </script>
 
 <template>
-  <DealInfo />
+  <DealInfo :info="info" />
   <div class="chat-view-box">
     <div class="chat-view">
       <div
@@ -112,7 +45,17 @@ const connect = () => {
         </div>
       </div>
     </div>
-    <ChatInput @send="sendMessage" v-model="content" />
+    <div class="chat-input-box">
+      <input
+        type="text"
+        @input="handleInput"
+        :value="modelValue"
+        class="input-box"
+        @keyup.enter="$emit('send')"
+      />
+      <button @click="$emit('send')" class="send-btn"></button>
+      <img src="../../assets/send.png" alt="send" class="send-btn" />
+    </div>
   </div>
 </template>
 
@@ -170,5 +113,28 @@ const connect = () => {
 .msg-date {
   padding: 0.5rem 0.3rem;
   color: #9c9c9c;
+}
+
+.chat-input-box {
+  /* background-color: aqua; */
+  display: flex;
+  width: 100%;
+  height: 7%;
+  padding: 0.5rem;
+  box-shadow: 0px -10px 10px -4px #c0c0c0;
+}
+
+.input-box {
+  width: 93%;
+  border-radius: 30px;
+  margin-right: 1%;
+  border: 2px solid #9c9c9c;
+  padding: 5px 10px;
+}
+
+.send-btn {
+  border-radius: 50%;
+  border: none;
+  background-size: contain;
 }
 </style>

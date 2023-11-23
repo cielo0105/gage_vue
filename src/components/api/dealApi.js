@@ -17,4 +17,8 @@ const getList = (cords, success, fail) => {
   local.get(`${url}/list`, { params: cords }).then(success).catch(fail)
 }
 
-export { registDeal, setImg, getList }
+const getDeal = (id, success, fail) => {
+  local.get(`${url}/deal`, { params: { id } }).then(success).catch(fail);
+}
+
+export { registDeal, setImg, getList, getDeal }
