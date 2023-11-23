@@ -1,6 +1,7 @@
 export const changeMoney = (value) => {
   if (!value) return
   value = Number(value.toString().replace(/,/g, ''))
+  if (value < 1000) return `${value}만원`
   const numbers = [numbering(value % 100000000, 10000), numbering(value % 10000, 1000)]
 
   return setUnitText(numbers)
@@ -24,4 +25,10 @@ const NUMBER_FORMAT_REGX = /\B(?=(\d{3})+(?!\d))/g
 
 const numberFormat = (value) => {
   return value.toString().replace(NUMBER_FORMAT_REGX, ',')
+}
+
+export const changeType = (type) => {
+  if (type === 'sale') return '매매'
+  else if (type === 'lease') return '전세'
+  else return '월세'
 }

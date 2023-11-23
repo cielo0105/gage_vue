@@ -15,16 +15,16 @@ const props = defineProps({ width: String, height: String, msg: String })
 <style scoped>
 .sign-btn {
   border-radius: 1.875rem;
-  background: #fff;
+  background: #ffd600;
   border: none;
   margin: 0.5rem 0;
 }
 .sign-btn:hover {
-  background: #6e2add;
+  background: #5acc00;
   color: #fff;
 }
 .text {
-  color: #6e2add;
+  color: black;
   text-align: center;
   line-height: normal;
   font-size: 1.25rem;

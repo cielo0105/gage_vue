@@ -1,28 +1,37 @@
 <script setup>
-import MapFilterBtn from '@/components/map/MapFilterBtn.vue'
+import { ref } from 'vue'
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
 
+const searchword = ref('')
 const search = () => {
-  console.log('click search btn!!')
+  emit('update:modelValue', searchword.value)
 }
 </script>
 
 <template>
   <div class="box">
     <section class="search">
-      <input type="text" placeholder="아파트, 동이름으로 검색하세요. " />
+      <input
+        type="text"
+        placeholder="동단위로 검색하세요. "
+        v-model="searchword"
+        @keydown="
+          (e) => {
+            if (e.key === 'Enter') {
+              search()
+            }
+          }
+        "
+      />
       <div class="search-icon" @click="search()"></div>
     </section>
-    <div class="btn-group">
-      <MapFilterBtn title="관심목록" color="#94BCF9" />
-      <MapFilterBtn title="준공년도" color="#0030AB" />
-      <MapFilterBtn title="면적" color="#0030AB" />
-    </div>
   </div>
 </template>
 
 <style scoped>
 .box {
-  width: 25rem;
+  width: 26.5rem;
   padding: 1rem;
   border-radius: 0.9375rem;
   background: #fff;
@@ -40,9 +49,9 @@ const search = () => {
 }
 
 input {
-  width: 21.1875rem;
+  width: 22.1875rem;
   border-radius: 0.9375rem;
-  border: 2px solid #0030ab;
+  border: 2px solid #5acc00;
   background: #fff;
   padding: 0.5rem;
   outline: none;
