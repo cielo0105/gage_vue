@@ -59,7 +59,7 @@ const submitForm = () => {
       <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Kakao" />
     </template> -->
     <template #form>
-      <form v-on:submit.prevent="submitForm" class="login-form">
+      <div class="login-form">
         <InputBox
           v-model="userid"
           width="36.875rem"
@@ -75,8 +75,8 @@ const submitForm = () => {
           label="비밀번호"
         />
         <div class="err-msg" v-show="errMsg.show">{{ errMsg.msg }}</div>
-        <SignBtn type="submit" width="25.5rem" height="2.875rem" msg="로그인" />
-      </form>
+        <SignBtn @click-signbtn="submitForm" width="25.5rem" height="2.875rem" msg="로그인" />
+      </div>
     </template>
   </v-auth-layout>
 </template>
