@@ -64,6 +64,7 @@ a {
 }
 .login-btn {
   width: 130px;
+  min-width: fit-content;
   height: 43px;
   background: rgba(255, 255, 255, 0.6);
   padding: 0.5rem 1rem;
