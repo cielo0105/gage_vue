@@ -1,5 +1,6 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
+const route = useRoute()
 </script>
 
 <template>
@@ -17,7 +18,7 @@ import { RouterLink } from 'vue-router'
           <!-- <p>등록</p> -->
         </div>
       </router-link>
-      <router-link to="/deal/chat">
+      <router-link to="/deal/chat" :class="route.fullPath.includes('chat') ? 'route-active' : ''">
         <div>
           <img src="../assets/chatIcon.png" alt="chat" width="50" height="50" />
           <!-- <p>채팅</p> -->
