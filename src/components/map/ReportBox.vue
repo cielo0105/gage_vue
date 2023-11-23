@@ -1,8 +1,11 @@
 <script setup>
+import { onMounted } from 'vue'
 import { changeMoney } from '@/util/changeMoney.js'
-import VAddress from '@/components/map/VAddress.vue'
-import ReportCard from '@/components/map/ReportCard.vue'
-const props = defineProps({ dong: String })
+
+import BarChart from '@/components/chart/BarChart.vue'
+import IndicatorChart from '@/components/chart/IndicatorChart.vue'
+const props = defineProps(['reportDong', 'category', 'fullCategory', 'indicator'])
+// reportDong - code, dong, cnt, rank, top
 </script>
 
 <template>
@@ -10,45 +13,62 @@ const props = defineProps({ dong: String })
     <div class="info-header">
       <button class="close-btn" @click="$emit('close-box')">✕</button>
     </div>
-
     <div class="px-3 pb-3">
       <h4>
-        <span class="fw-bold">{{ props.dong }}</span> 상권 분석 보고서
+        <span class="fw-bold">{{ reportDong.dong }}</span> 상권 분석 보고서
       </h4>
-      <VAddress title="지번주소" :address="apt?.address" />
-      <VAddress title="도로명주소" :address="apt?.road_address" v-if="apt?.road_address" />
+      <!-- <VAddress title="지번주소" :address="apt?.address" />
+      <VAddress title="도로명주소" :address="apt?.road_address" v-if="apt?.road_address" /> -->
+      <span class="category"
+        >{{ fullCategory.indsLclsNm }}>{{ fullCategory.indsMclsNm }}>{{
+          fullCategory.indsSclsNm
+        }}</span
+      >
     </div>
-
     <div class="scroll-box">
       <div class="row">
         <div class="col-md-4">
-          <div class="p-3 d-flex card area">선택 업종 업소 수</div>
+          <div class="p-3 d-flex card area">
+            선택 업종 업소 수
+            <span class="fw-bold">{{ props.reportDong.cnt }}</span>
+          </div>
         </div>
         <div class="col-md-4">
-          <div class="p-3 d-flex card area">가장 많은 연령대</div>
+          <div class="p-3 d-flex card area">
+            가장 많은 연령대
+
+            <span class="fw-bold">{{ props.reportDong.top[0] }}</span>
+          </div>
+
+          <!-- <p>{{ reportDong.rank[1].top1 }}</p> -->
         </div>
         <div class="col-md-4">
-          <div class="p-3 d-flex card area">연간 순수익</div>
+          <div class="p-3 d-flex card area">
+            상권 변화지표
+            <span class="fw-bold">{{ props.indicator.changeNm }}</span>
+          </div>
         </div>
       </div>
       <div class="p-3">
-        <p>거래내역</p>
-        <table id="table-history" class="table table-hover">
-          <thead class="table-light">
-            <tr>
-              <th>실거래가</th>
-              <th>계약 일</th>
-              <th>면적</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(element, index) in apt?.houseDealDto" :key="index">
-              <td>{{ changeMoney(element.dealAmount) }}</td>
-              <td>{{ element.dealYear }}.{{ element.dealMonth }}.{{ element.dealDay }}</td>
-              <td>{{ element.area }}m<sup>2</sup></td>
-            </tr>
-          </tbody>
-        </table>
+        <section>
+          <p>유사 업종</p>
+          <table class="table">
+            <tbody>
+              <tr v-for="(gage, index) in reportDong.gageRank" :key="index">
+                <th scope="row">{{ index + 1 }}</th>
+                <td>{{ gage.indsSclsNm }}</td>
+                <td>{{ gage.count }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section>
+          <p>연령대</p>
+          <BarChart :reportDong="reportDong" />
+        </section>
+        <section>상권 변화 지표</section>
+
+        <IndicatorChart :indicator="indicator" />
       </div>
     </div>
   </div>
@@ -95,13 +115,6 @@ const props = defineProps({ dong: String })
   outline: none;
 }
 
-.money {
-  color: #000;
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-right: 0.4rem;
-}
-
 .area {
   color: #343a40;
   font-size: 0.75rem;
@@ -115,5 +128,11 @@ const props = defineProps({ dong: String })
   background: #fff;
   width: 8rem;
   height: 6.3125rem;
+}
+
+.category {
+  color: #9c9c9c;
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
 </style>

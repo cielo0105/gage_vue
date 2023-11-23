@@ -7,9 +7,9 @@ export const getGageList = async (code) => {
 }
 
 // 동단위로 가게 개수 찾기 (+업종 코드로 찾기)
-export const getGageCount = async (dong, code = null) => {
+export const getGageCount = async (dong, code) => {
   let url = `/gage/count?dong=${dong}`
-  if (code !== null) {
+  if (code !== '') {
     url += `&code=${code}`
   }
 
