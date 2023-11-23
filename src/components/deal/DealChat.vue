@@ -67,7 +67,6 @@ const receiveDealInfo = (id) => {
   getDeal(
     id,
     ({ data }) => {
-      console.log('deal watch===========', data.data)
       info.value = data.data
     },
     (err) => console.log(err)

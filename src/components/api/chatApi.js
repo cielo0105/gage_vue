@@ -10,5 +10,10 @@ const getList = (user, success, fail) => {
 
 const getMessages = (chatId, success, fail) => {
     local.get(`${url}/msgs?chatId=${chatId}`).then(success).catch(fail)
-  }
-export {getList,  getMessages}
+}
+  
+const createChat = (user, success, fail) => {
+  local.post(`${url}/room`, JSON.stringify(user)).then(success).catch(fail)
+}
+
+export {getList,  getMessages, createChat}

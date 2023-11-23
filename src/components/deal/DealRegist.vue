@@ -32,7 +32,8 @@ const dealInfo = ref({
   img: null,
   desc: null,
   lat: null,
-  lon: null
+  lon: null,
+  user: localStorage.getItem('user')
 })
 
 onMounted(() => {
@@ -219,14 +220,6 @@ const handleRegist = () => {
             type="number"
             placeholder="총 층수"
           />
-        </div>
-        <div class="input-img">
-          <label class="text">사진</label>
-          <div class="filebox">
-            <input class="upload-name" placeholder="첨부파일" :value="dealInfo.fileName" readonly />
-            <label for="file">첨부</label>
-            <input type="file" id="file" @change="setGageImg" accept="image/*" />
-          </div>
         </div>
         <div style="display: flex; margin-bottom: 3rem">
           <label class="text">설명</label>

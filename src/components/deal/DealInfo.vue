@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import VAddress from '@/components/map/VAddress.vue'
 import { changeMoney } from '@/util/changeMoney.js'
+import { createChat } from '@/components/api/chatApi'
 const router = useRouter()
 const prop = defineProps({
   info: Object,
@@ -19,8 +20,24 @@ const dealType = computed(() => {
   }
 })
 
-const getImg = (img) => {
-  return new URL(img, import.meta.url).href
+const handleChat = () => {
+  const requestData = {
+    user: localStorage.getItem('user'),
+    deal: prop.info.id
+  }
+
+  createChat(
+    requestData,
+    ({ data }) => {
+      console.log(data.data)
+
+      router.push({ path: `/deal/chat/${data.data}` })
+    },
+    (err) => {
+      console.log(err)
+      alert('서버와의 연결이 원활하지 않습니다.\n 잠시후 다시 시도해주세요.')
+    }
+  )
 }
 </script>
 
@@ -45,7 +62,6 @@ const getImg = (img) => {
       />
       <hr />
       <div class="content">
-        <!-- <img :src="getImg(info?.img)" alt="img" v-if="info?.img" class="info-img" /> -->
         <b>전용 면적</b>
         <span>{{ info?.area }} ㎡ </span>
         <br />
@@ -60,9 +76,7 @@ const getImg = (img) => {
       </div>
     </div>
     <div class="footer" v-show="isMap">
-      <button class="chat-btn" @click="() => router.push({ path: `/deal/chat/${info?.id}` })">
-        채팅하기
-      </button>
+      <button class="chat-btn" @click="handleChat">채팅하기</button>
     </div>
   </div>
 </template>

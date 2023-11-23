@@ -19,9 +19,9 @@ defineProps({
     >
       <header class="chat-header">
         <h5>{{ item.name1 }}, {{ item.name2 }}</h5>
-        <span>{{ item.lastSend }}</span>
+        <span>{{ item.lastSend ? item.lastSend : ' ' }}</span>
       </header>
-      <span>{{ item.lastMsg }}</span>
+      <span>{{ item.lastMsg ? item.lastMsg : ' ' }}</span>
     </div>
   </div>
 </template>

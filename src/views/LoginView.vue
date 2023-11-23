@@ -41,6 +41,9 @@ const submitForm = () => {
     },
     (err) => {
       console.log('로그인 실패ㅜㅜ', err.response.data.msg)
+      alert('아이디 또는 비밀번호가 일치하지 않습니다.')
+      userid.value = ''
+      userpass.value = ''
     }
   )
 }
