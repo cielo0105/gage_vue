@@ -32,7 +32,7 @@ const handleInput = ($event) => {
 <style scoped>
 .input-box {
   border-radius: 0.625rem;
-  background: #fff;
+  background: #5acc00;
   border: none;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
   margin-bottom: 1.87rem;
@@ -46,11 +46,11 @@ const handleInput = ($event) => {
 .input-btn {
   width: 25%;
   border-radius: 0.625rem;
-  background: #fff;
+  background: #ffd600;
   border: none;
   margin: 0.5rem 0;
 
-  color: #6e2add;
+  color: black;
   text-align: center;
   line-height: normal;
   font-size: 1.25rem;
@@ -58,12 +58,12 @@ const handleInput = ($event) => {
 }
 
 .input-btn:hover {
-  background: #6e2add;
-  color: #fff;
+  background: white;
+  color: #ffd600;
 }
 
 .text {
-  color: #6e2add;
+  color: #5acc00;
   font-size: 1.25rem;
   font-weight: 700;
   display: block;

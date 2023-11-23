@@ -52,6 +52,7 @@ const submitForm = () => {
         router.push({ name: 'login' })
       },
       (err) => {
+        alert(err.response.data.msg)
         console.log('회원가입 실패ㅜㅜ', err.response.data.msg)
       }
     )
