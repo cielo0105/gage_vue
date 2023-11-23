@@ -96,7 +96,12 @@ const createMarker = (data) => {
 </script>
 
 <template>
-  <deal-info :info="dealInfo" v-if="isShow" @close-box="() => (isShow = false)"></deal-info>
+  <deal-info
+    :info="dealInfo"
+    v-if="isShow"
+    @close-box="() => (isShow = false)"
+    isMap="true"
+  ></deal-info>
   <div id="map"></div>
 </template>
 

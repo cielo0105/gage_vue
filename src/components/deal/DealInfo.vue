@@ -6,7 +6,7 @@ import { changeMoney } from '@/util/changeMoney.js'
 const router = useRouter()
 const prop = defineProps({
   info: Object,
-  isShow: Boolean
+  isMap: Boolean
 })
 
 const dealType = computed(() => {
@@ -33,10 +33,10 @@ const getImg = (img) => {
       border: 1px solid #ececec;
     "
   >
-    <div class="dealinfo-box" :class="{ 'dealinfo-box-height': !isShow }">
+    <div class="dealinfo-box" :class="{ 'dealinfo-box-height': !isMap }">
       <header class="header">
         <strong class="title">{{ dealType }}</strong>
-        <button class="close-btn" @click="$emit('close-box')" v-show="isShow">✕</button>
+        <button class="close-btn" @click="$emit('close-box')" v-show="isMap">✕</button>
       </header>
       <VAddress
         title="주소"
@@ -59,7 +59,7 @@ const getImg = (img) => {
         <p>{{ info?.desc }}</p>
       </div>
     </div>
-    <div class="footer" v-show="isShow">
+    <div class="footer" v-show="isMap">
       <button class="chat-btn" @click="() => router.push({ path: `/deal/chat/${info?.id}` })">
         채팅하기
       </button>
