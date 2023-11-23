@@ -204,6 +204,6 @@ const showDetail = async (lat, lng, dong, code, cnt) => {
 <style scoped>
 #map {
   width: 100vw;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 81.66px);
 }
 </style>

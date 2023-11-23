@@ -28,15 +28,6 @@ import VFooter from '@/components/common/VFooter.vue'
       <span>여러분의 창업을 시작해보세요!</span>
       <router-link class="start-btn" to="/map">시작하기</router-link>
     </section>
-    <div class="info1">
-      <img src="../assets/info1.png" alt="info1" />
-    </div>
-    <div class="info2">
-      <img src="../assets/info2.png" alt="info2" />
-    </div>
-    <div class="info3">
-      <img src="../assets/info3.png" alt="info3" />
-    </div>
   </div>
   <VFooter />
 </template>
