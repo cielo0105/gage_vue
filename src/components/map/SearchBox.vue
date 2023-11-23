@@ -1,13 +1,29 @@
 <script setup>
+import { ref } from 'vue'
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+const searchword = ref('')
 const search = () => {
-  console.log('click search btn!!')
+  emit('update:modelValue', searchword.value)
 }
 </script>
 
 <template>
   <div class="box">
     <section class="search">
-      <input type="text" placeholder="동단위로 검색하세요. " />
+      <input
+        type="text"
+        placeholder="동단위로 검색하세요. "
+        v-model="searchword"
+        @keydown="
+          (e) => {
+            if (e.key === 'Enter') {
+              search()
+            }
+          }
+        "
+      />
       <div class="search-icon" @click="search()"></div>
     </section>
   </div>

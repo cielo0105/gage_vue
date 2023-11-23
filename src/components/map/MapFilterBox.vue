@@ -14,7 +14,8 @@ const middleList = ref([{ text: '중분류', value: '' }]) // 중분류
 const subList = ref([{ text: '소분류', value: '' }]) // 소분류
 const result = ref([])
 const search = ref('')
-
+const props = defineProps({ category: String })
+const emit = defineEmits(['update:category'])
 onMounted(() => {
   getMain()
 })
@@ -24,12 +25,11 @@ const getMain = async () => {
   let options = []
   let lists = await getMainList()
   options.push({ text: '대분류', value: '' })
-  console.log('lists:', lists)
+  // console.log('lists:', lists)
   lists.forEach((list) => {
     options.push({ text: list.indsLclsNm, value: list.indsLclsCd })
   })
   mainList.value = options
-  console.log('mainList', mainList.value)
 }
 
 const onChangeMain = async (val) => {
@@ -37,19 +37,20 @@ const onChangeMain = async (val) => {
   let lists = await getMiddleList(val)
   options.push({ text: '중분류', value: '' })
   subList.value = [{ text: '소분류', value: '' }]
-  console.log('lists:', lists)
+  // console.log('lists:', lists)
   lists.forEach((list) => {
     options.push({ text: list.indsMclsNm, value: list.indsMclsCd })
   })
   middleList.value = options
-  console.log('middleList', middleList.value)
+
+  // console.log('middleList', middleList.value)
 }
 
 const onChangeMiddle = async (val) => {
   let options = []
   let lists = await getSubList(val)
   options.push({ text: '소분류', value: '' })
-  console.log('lists:', lists)
+  // console.log('lists:', lists)
   lists.forEach((list) => {
     options.push({ text: list.indsSclsNm, value: list.indsSclsCd })
   })
@@ -62,8 +63,9 @@ const onChangeSub = async (val) => {
 }
 
 const searchCode = async () => {
-  result.value = await getResult(search.value)
-  console.log('result: ', result)
+  // result.value = await getResult(search.value)
+  emit('update:category', search.value)
+  // console.log('result: ', result)
 }
 </script>
 

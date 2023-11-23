@@ -27,3 +27,9 @@ export const getResult = async (sub) => {
   const result = await res.data.data
   return result
 }
+
+export const getCategory = async (code) => {
+  const res = await axios.get(`/gage/category?code=${code}`)
+  const category = await res.data.data
+  return category
+}
