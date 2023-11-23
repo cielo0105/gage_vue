@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { InputBox, SignBtn, VAuthLayout } from '@/components/auth'
-import { registMember } from '@/components/api/memberApi.js'
+import { InputBox, SignBtn, VAuthLayout, InputBoxWithBtn } from '@/components/auth'
+import { registMember, sendAuthEmailNum } from '@/components/api/memberApi.js'
 
 const router = useRouter()
 
@@ -12,6 +12,9 @@ const member = ref({
   passcheck: '',
   name: '',
   emailFlag: true,
+  authNum: '',
+  oriAuthNum: '',
+  authFlag: false,
   passFlag: true
 })
 // const regex = '^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
@@ -49,9 +52,39 @@ const submitForm = () => {
         router.push({ name: 'login' })
       },
       (err) => {
+        alert(err.response.data.msg)
         console.log('회원가입 실패ㅜㅜ', err.response.data.msg)
       }
     )
+  }
+}
+
+const sendAuthNum = () => {
+  if (member.value.id.length === 0) alert('이메일을 입력해주세요')
+  else if (!member.value.emailFlag) alert('이메일 형식 확인')
+  else {
+    const requestData = {
+      email: member.value.id
+    }
+    sendAuthEmailNum(
+      requestData,
+      ({ data }) => {
+        console.log('메일 전송 완료 data==', data)
+        member.value.oriAuthNum = data
+        member.value.authFlag = true
+      },
+      (err) => {
+        console.log('메일 전송 실패ㅜㅜ', err.response.data.msg)
+      }
+    )
+  }
+}
+
+const isAuth = () => {
+  if (member.value.oriAuthNum === member.value.authNum) {
+    alert('인증 완료')
+  } else {
+    alert('인증번호가 일치하지 않습니다.')
   }
 }
 </script>
@@ -63,16 +96,28 @@ const submitForm = () => {
       <SignBtn width="31.4375rem" height="2.875rem" msg="Start with Kakao" />
     </template> -->
     <template #form>
-      <form @submit.prevent="submitForm" class="join-form">
-        <input-box
+      <div class="join-form">
+        <input-box-with-btn
           v-model="member.id"
           width="36.875rem"
           height="3.6875rem"
           type="text"
           @input="emailCheck"
+          @click-btn="sendAuthNum"
           label="이메일"
+          btnName="인증"
         />
         <span v-if="!member.emailFlag">이메일 형식이 올바르지 않습니다</span>
+        <input-box-with-btn
+          v-if="member.authFlag"
+          v-model="member.authNum"
+          width="36.875rem"
+          height="3.6875rem"
+          type="text"
+          @click-btn="isAuth"
+          label="인증 번호"
+          btnName="확인"
+        />
         <input-box
           v-model="member.pass"
           width="36.875rem"
@@ -96,8 +141,8 @@ const submitForm = () => {
           type="text"
           label="이름"
         />
-        <SignBtn type="submit" width="25.5rem" height="2.875rem" msg="가입하기" />
-      </form>
+        <SignBtn @click-signbtn="submitForm" width="25.5rem" height="2.875rem" msg="가입하기" />
+      </div>
     </template>
   </v-auth-layout>
 </template>
