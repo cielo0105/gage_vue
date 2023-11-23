@@ -1,15 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import {
-  HomeView,
-  JoinView,
-  LoginView,
-  MapView,
-  NoticeView,
-  ReportView,
-  DealView,
-  PolicyView,
-  SupportView
-} from '@/views'
+import { HomeView, JoinView, LoginView, MapView, NoticeView, ReportView, DealView } from '@/views'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,21 +28,22 @@ const router = createRouter({
       path: '/notice',
       name: 'notice',
       component: NoticeView,
+      redirect: { name: 'news' },
       children: [
         {
-          path: 'list',
-          name: 'notice-list',
-          component: () => import('@/components/notice/NoticeList.vue')
+          path: 'news',
+          name: 'news',
+          component: () => import('@/components/notice/NewsList.vue')
         },
         {
-          path: 'view/:articleno',
-          name: 'notice-view',
-          component: () => import('@/components/notice/NoticeDetail.vue')
+          path: 'info',
+          name: 'info',
+          component: () => import('@/components/notice/InfoList.vue')
         },
         {
-          path: 'write',
-          name: 'notice-write',
-          component: () => import('@/components/notice/NoticeWrite.vue')
+          path: 'support',
+          name: 'support',
+          component: () => import('@/components/notice/SupportList.vue')
         },
         {
           path: 'modify/:articleno',
@@ -60,16 +51,6 @@ const router = createRouter({
           component: () => import('@/components/notice/NoticeModify.vue')
         }
       ]
-    },
-    {
-      path: '/policy',
-      name: 'policy',
-      component: PolicyView
-    },
-    {
-      path: '/support',
-      name: 'support',
-      component: SupportView
     },
 
     {

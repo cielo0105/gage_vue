@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 import { Chart, Grid, Bar, Tooltip } from 'vue3-charts'
 
 const props = defineProps(['reportDong'])

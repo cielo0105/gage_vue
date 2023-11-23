@@ -11,3 +11,9 @@ export const getGageRank = async (code, dong) => {
   const gageRank = await res.data.data
   return gageRank
 }
+
+export const getIndicator = async (code) => {
+  const res = await axios.get(`/report/indicator?code=${code}`)
+  const indicator = await res.data.data
+  return indicator
+}

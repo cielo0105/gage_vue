@@ -2,10 +2,9 @@
 import { onMounted } from 'vue'
 import { changeMoney } from '@/util/changeMoney.js'
 
-import VAddress from '@/components/map/VAddress.vue'
-import ReportCard from '@/components/map/ReportCard.vue'
 import BarChart from '@/components/chart/BarChart.vue'
-const props = defineProps(['reportDong', 'category', 'fullCategory'])
+import IndicatorChart from '@/components/chart/IndicatorChart.vue'
+const props = defineProps(['reportDong', 'category', 'fullCategory', 'indicator'])
 // reportDong - code, dong, cnt, rank, top
 </script>
 
@@ -14,7 +13,6 @@ const props = defineProps(['reportDong', 'category', 'fullCategory'])
     <div class="info-header">
       <button class="close-btn" @click="$emit('close-box')">✕</button>
     </div>
-
     <div class="px-3 pb-3">
       <h4>
         <span class="fw-bold">{{ reportDong.dong }}</span> 상권 분석 보고서
@@ -45,24 +43,32 @@ const props = defineProps(['reportDong', 'category', 'fullCategory'])
           <!-- <p>{{ reportDong.rank[1].top1 }}</p> -->
         </div>
         <div class="col-md-4">
-          <div class="p-3 d-flex card area">연간 순수익</div>
+          <div class="p-3 d-flex card area">
+            상권 변화지표
+            <span class="fw-bold">{{ props.indicator.changeNm }}</span>
+          </div>
         </div>
       </div>
       <div class="p-3">
-        <p>유사 업종</p>
-        <table class="table">
-          <tbody>
-            <tr v-for="(gage, index) in reportDong.gageRank" :key="index">
-              <th scope="row">{{ index + 1 }}</th>
-              <td>{{ gage.indsSclsNm }}</td>
-              <td>{{ gage.count }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <section>
+          <p>유사 업종</p>
+          <table class="table">
+            <tbody>
+              <tr v-for="(gage, index) in reportDong.gageRank" :key="index">
+                <th scope="row">{{ index + 1 }}</th>
+                <td>{{ gage.indsSclsNm }}</td>
+                <td>{{ gage.count }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section>
+          <p>연령대</p>
+          <BarChart :reportDong="reportDong" />
+        </section>
+        <section>상권 변화 지표</section>
 
-        <p>연령대</p>
-        <!-- <DoughnutChart :reportDong="props.reportDong" /> -->
-        <BarChart :reportDong="reportDong" />
+        <IndicatorChart :indicator="indicator" />
       </div>
     </div>
   </div>

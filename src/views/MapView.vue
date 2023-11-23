@@ -3,11 +3,10 @@ import { onMounted, ref, watch } from 'vue'
 import SearchBox from '@/components/map/SearchBox.vue'
 import ReportBox from '@/components/map/ReportBox.vue'
 import MapFilterBox from '../components/map/MapFilterBox.vue'
-import { changeMoney } from '@/util/changeMoney.js'
-import { getGageList, getGageCount } from '@/components/api/gageApi.js'
+import { getGageCount } from '@/components/api/gageApi.js'
 import { getCategory } from '@/components/api/categoryListApi'
 import { getDongList, searchDong } from '@/components/api/mapApi.js' // 지도 범위에 있는 동
-import { getLocalPeopleRank, getGageRank } from '@/components/api/reportApi.js'
+import { getLocalPeopleRank, getGageRank, getIndicator } from '@/components/api/reportApi.js'
 
 let map, geocoder
 let markers = new Map()
@@ -25,6 +24,7 @@ const reportDong = ref({
 const category = ref('') // 검색할 업종 코드
 const searchword = ref('') //
 const fullCategory = ref([])
+const indicator = ref([])
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap()
@@ -164,17 +164,19 @@ const createMarker = async (data) => {
 const showDetail = async (lat, lng, dong, code, cnt) => {
   geocoder.coord2Address(lng, lat, async (result, status) => {
     if (status === window.kakao.maps.services.Status.OK) {
-      // console.log('result', result)
       reportDong.value.dong = dong
       reportDong.value.code = code
       reportDong.value.cnt = cnt
       const rank = await getLocalPeopleRank(code)
-      // console.log('full', fullCategory.value.indsLclsNm)
       const gageRank = await getGageRank(fullCategory.value.indsLclsCd, code)
-      // console.log('랭킹', gageRank)
+      const dongIndicator = await getIndicator(code) // 상권변화지표 결과
+
+      indicator.value = dongIndicator
+
       reportDong.value.gageRank = gageRank
       reportDong.value.rank = rank
       reportDong.value.top = [] // 초기화
+
       for (let r in rank) {
         reportDong.value.top.push(r)
       }
@@ -191,6 +193,7 @@ const showDetail = async (lat, lng, dong, code, cnt) => {
       :reportDong="reportDong"
       :category="category"
       :fullCategory="fullCategory"
+      :indicator="indicator"
       v-show="isShow"
       @close-box="isShow = false"
     />
